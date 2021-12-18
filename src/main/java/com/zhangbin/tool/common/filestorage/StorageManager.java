@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class StorageManager {
 
 
-    public static AtomicBoolean initialized = new AtomicBoolean(false);
+    private static final AtomicBoolean initialized = new AtomicBoolean(false);
 
     public StorageManager() {
     }
