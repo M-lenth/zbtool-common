@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class StorageManager {
 
 
-    public static AtomicBoolean bool = new AtomicBoolean(false);
+    public static AtomicBoolean inited = new AtomicBoolean(false);
 
     public StorageManager() {
     }
@@ -30,10 +30,10 @@ public class StorageManager {
      * @param conf 连接配置地址
      */
     public static void init(String conf) throws IOException, MyException {
-        if (!bool.get()) {
+        if (!inited.get()) {
             // 未初始化过
             ClientGlobal.init(conf);
-            bool.set(true);
+            inited.set(true);
         }
         throw new InitedException();
     }
