@@ -3,15 +3,26 @@
 #### 介绍
 
 #### 软件架构
-软件架构说明
 
+工具类
 
 #### 安装教程
 
-1.  xxxx
+添加远程仓库地址
+
+```
+http://120.24.205.42:8081/nexus/content/groups/public/
+```
+
+添加依赖
+
+```xml
+<dependency>
+    <groupId>com.zhangbin</groupId>
+    <artifactId>zbtool-common</artifactId>
+    <version>1.0</version>
+</dependency>
+```
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
