@@ -35,6 +35,6 @@ public class DateConstant {
     /**
      * yyyyMMddHHmmss
      */
-    public static final String YYYYMMDDHHmmss = "yyyyMMddHHmmss";
+    public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
 }
