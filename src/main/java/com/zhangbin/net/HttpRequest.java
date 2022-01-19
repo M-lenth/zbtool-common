@@ -49,7 +49,41 @@ public class HttpRequest {
         this.body = body;
     }
 
-    public static class Buider {
+    public static class Builder {
+        private final HttpRequest request = new HttpRequest();
 
+        private Builder url(String url) {
+            this.request.url = url;
+            return this;
+        }
+
+        private Builder get() {
+            this.request.method = HttpMethod.GET;
+            return this;
+        }
+
+        private Builder post() {
+            this.request.method = HttpMethod.POST;
+            return this;
+        }
+
+        private Builder put() {
+            this.request.method = HttpMethod.PUT;
+            return this;
+        }
+
+        private Builder delete() {
+            this.request.method = HttpMethod.DELETE;
+            return this;
+        }
+
+        private Builder body(String body) {
+            this.request.body = body;
+            return this;
+        }
+
+        public HttpRequest build() {
+            return this.request;
+        }
     }
 }
