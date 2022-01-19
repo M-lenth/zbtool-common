@@ -1,7 +1,4 @@
-package com.zhangbin.tool.common.filestorage;
-
-import java.io.File;
-import java.util.Arrays;
+package com.zhangbin.tool.web.filestorage;
 
 /**
  * Classname: FastDfsFile <br>

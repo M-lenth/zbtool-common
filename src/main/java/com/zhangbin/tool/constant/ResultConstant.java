@@ -10,5 +10,22 @@ package com.zhangbin.tool.constant;
  */
 public class ResultConstant {
 
+    /**
+     * 成功代码
+     */
+    public static final Integer SUCCESS = 0;
+    /**
+     * 成功信息
+     */
+    public static final String SUCCESS_CN = "操作成功";
+    /**
+     * 失败代码
+     */
+    public static final Integer ERROR = 1;
+    /**
+     * 失败信息
+     */
+    public static final String ERROR_CN = "操作失败";
+
 
 }

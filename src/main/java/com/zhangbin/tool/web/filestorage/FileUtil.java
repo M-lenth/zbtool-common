@@ -1,4 +1,4 @@
-package com.zhangbin.tool.common.filestorage;
+package com.zhangbin.tool.web.filestorage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

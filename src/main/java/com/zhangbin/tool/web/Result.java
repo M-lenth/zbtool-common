@@ -1,5 +1,7 @@
 package com.zhangbin.tool.web;
 
+import static com.zhangbin.tool.constant.ResultConstant.*;
+
 /**
  * Classname: Result <br>
  * Description: <p> 控制器返回值 </p>  <br>
@@ -47,8 +49,25 @@ public class Result<T> {
         this.data = data;
     }
 
-    public static <T> Result<T> ok() {
-        return null;
+    /**
+     * 成功返回值
+     *
+     * @param data 返回数据
+     * @param <T>  返回类型
+     * @return {@link Result}
+     */
+    public static <T> Result<T> ok(T data) {
+        return new Result<>(SUCCESS, SUCCESS_CN, data);
+    }
+
+    /**
+     * 失败返回信息
+     *
+     * @param message 失败信息
+     * @return 返回信息 {@link Result}
+     */
+    public static <T> Result<T> error(String message) {
+        return new Result<>(ERROR, message, null);
     }
 
 

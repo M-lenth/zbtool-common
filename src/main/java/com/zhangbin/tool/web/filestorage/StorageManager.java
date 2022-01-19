@@ -1,6 +1,6 @@
-package com.zhangbin.tool.common.filestorage;
+package com.zhangbin.tool.web.filestorage;
 
-import com.zhangbin.tool.exception.InitedException;
+import com.zhangbin.tool.exception.InitializedException;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
@@ -27,15 +27,15 @@ public class StorageManager {
     /**
      * 初始化连接
      *
-     * @param conf 连接配置地址
+     * @param conf 连接配置文件地址
      */
     public static void init(String conf) throws IOException, MyException {
-        if (!initialized.get()) {
-            // 未初始化过
-            ClientGlobal.init(conf);
-            initialized.set(true);
+        if (initialized.get()) {
+            throw new InitializedException();
         }
-        throw new InitedException();
+        // 未初始化过
+        ClientGlobal.init(conf);
+        initialized.set(true);
     }
 
     /**

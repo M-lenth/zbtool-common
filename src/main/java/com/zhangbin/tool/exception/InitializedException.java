@@ -8,12 +8,12 @@ package com.zhangbin.tool.exception;
  * @create 2021/12/18 10:11
  * @since JDK1.8
  */
-public class InitedException extends RuntimeException {
-    public InitedException(String message) {
+public class InitializedException extends RuntimeException {
+    public InitializedException(String message) {
         super(message);
     }
 
-    public InitedException() {
+    public InitializedException() {
         super("已初始化过");
     }
 

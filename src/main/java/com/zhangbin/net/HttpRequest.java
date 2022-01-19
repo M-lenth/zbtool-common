@@ -48,4 +48,8 @@ public class HttpRequest {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public static class Buider {
+
+    }
 }
