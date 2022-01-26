@@ -1,10 +1,10 @@
-package com.zhangbin.tool.common;
+package com.zhangbin.tool.common.util;
 
-import com.zhangbin.tool.exception.NumberTypeNotSameException;
+import com.zhangbin.tool.common.exception.NumberTypeNotSameException;
 
 /**
  * Classname: NumberUtil <br>
- * Description: <p>  </p>  <br>
+ * Description: <p> 用于对数的比较 </p>  <br>
  *
  * @author zhangbin
  * @create 2021/12/30 16:58

@@ -1,10 +1,10 @@
-package com.zhangbin.tool.common;
+package com.zhangbin.tool.common.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.zhangbin.tool.constant.DateConstant.*;
+import static com.zhangbin.tool.common.constant.DateConstant.*;
 
 /**
  * Classname: DateUtil <br>

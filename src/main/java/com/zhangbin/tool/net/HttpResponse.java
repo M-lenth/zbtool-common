@@ -1,4 +1,4 @@
-package com.zhangbin.net;
+package com.zhangbin.tool.net;
 
 /**
  * Classname: HttpResponse <br>
@@ -87,7 +87,7 @@ public class HttpResponse {
      * @param data           成功数据
      * @param successMessage 成功返回信息
      */
-    public void setSuccess(Object data, String successMessage) {
+    protected void setSuccess(Object data, String successMessage) {
         this.data = data;
         this.successMessage = successMessage;
         this.code = SUCCESS;

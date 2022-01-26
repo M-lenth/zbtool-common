@@ -1,4 +1,4 @@
-package com.zhangbin.tool.common;
+package com.zhangbin.tool.common.util;
 
 /**
  * Classname: StringUtils <br>

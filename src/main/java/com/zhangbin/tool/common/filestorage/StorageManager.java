@@ -1,6 +1,6 @@
-package com.zhangbin.tool.web.filestorage;
+package com.zhangbin.tool.common.filestorage;
 
-import com.zhangbin.tool.exception.InitializedException;
+import com.zhangbin.tool.common.exception.InitializedException;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class StorageManager {
 
 
-    private static final AtomicBoolean initialized = new AtomicBoolean(false);
+    private static final AtomicBoolean INITIALIZED = new AtomicBoolean(false);
 
     public StorageManager() {
     }
@@ -30,12 +30,12 @@ public class StorageManager {
      * @param conf 连接配置文件地址
      */
     public static void init(String conf) throws IOException, MyException {
-        if (initialized.get()) {
+        if (INITIALIZED.get()) {
             throw new InitializedException();
         }
         // 未初始化过
         ClientGlobal.init(conf);
-        initialized.set(true);
+        INITIALIZED.set(true);
     }
 
     /**

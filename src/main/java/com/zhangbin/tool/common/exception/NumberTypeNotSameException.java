@@ -1,4 +1,4 @@
-package com.zhangbin.tool.exception;
+package com.zhangbin.tool.common.exception;
 
 /**
  * Classname: NumberTypeNotSameException <br>
