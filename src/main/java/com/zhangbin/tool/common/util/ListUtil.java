@@ -1,12 +1,10 @@
-package com.zhangbin.tool.common;
+package com.zhangbin.tool.common.util;
 
 import java.util.*;
 
-import static com.zhangbin.tool.constant.KeyConstant.*;
-
 /**
  * Classname: ListUtil <br>
- * Description: <p>  </p>  <br>
+ * Description: <p> 对List的一些常用操作 </p>  <br>
  *
  * @author zhangbin
  * @create 2021/12/30 16:34

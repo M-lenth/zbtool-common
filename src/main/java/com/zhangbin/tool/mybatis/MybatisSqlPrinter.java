@@ -1,8 +1,7 @@
 package com.zhangbin.tool.mybatis;
 
-
-import com.zhangbin.tool.common.DateUtil;
-import com.zhangbin.tool.constant.DateConstant;
+import com.zhangbin.tool.common.util.DateUtil;
+import com.zhangbin.tool.common.constant.DateConstant;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -17,7 +16,6 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.apache.log4j.Logger;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -39,7 +37,7 @@ import java.util.regex.Matcher;
     })
 public class MybatisSqlPrinter implements Interceptor {
 
-    private Logger logger = Logger.getLogger(MybatisSqlPrinter.class);
+    private static final Logger logger = Logger.getLogger(MybatisSqlPrinter.class);
 
 
     @Override
@@ -128,7 +126,7 @@ public class MybatisSqlPrinter implements Interceptor {
             } else if (propertyValue instanceof Date) {
                 // 日期
                 try {
-                    result = "'" + DateUtil.getDate((String) propertyValue, DateConstant.YYYY_MM_DD_HH_MM_SS) + "'";
+                    result = "'" + DateUtil.getDate(String.valueOf(propertyValue), DateConstant.YYYY_MM_DD_HH_MM_SS) + "'";
                 } catch (ParseException e) {
                     logger.info("出现异常: ", e);
                     result = "";

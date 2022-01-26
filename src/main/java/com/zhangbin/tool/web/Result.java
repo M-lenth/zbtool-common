@@ -1,6 +1,6 @@
 package com.zhangbin.tool.web;
 
-import static com.zhangbin.tool.constant.ResultConstant.*;
+import static com.zhangbin.tool.common.constant.ResultConstant.*;
 
 /**
  * Classname: Result <br>

@@ -1,4 +1,4 @@
-package com.zhangbin.tool.constant;
+package com.zhangbin.tool.common.constant;
 
 /**
  * Classname: DateConstant <br>

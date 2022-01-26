@@ -1,4 +1,4 @@
-package com.zhangbin.tool.web.filestorage;
+package com.zhangbin.tool.common.filestorage;
 
 /**
  * Classname: FastDfsFile <br>
