@@ -36,7 +36,7 @@ public class HttpUtil {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 // 返回JSON数据
-                resp.setSuccess(response.body().toString(), "返回成功");
+                resp.setSuccess(response.body().string(), "返回成功");
             }
         });
         return resp;

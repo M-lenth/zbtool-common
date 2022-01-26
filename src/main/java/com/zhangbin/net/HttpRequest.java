@@ -23,7 +23,7 @@ public class HttpRequest {
     /**
      * 请求内容, JSON格式
      */
-    private String body;
+    private String body = "";
 
     public String getUrl() {
         return url;
@@ -52,35 +52,39 @@ public class HttpRequest {
     public static class Builder {
         private final HttpRequest request = new HttpRequest();
 
-        private Builder url(String url) {
+        public Builder url(String url) {
             this.request.url = url;
             return this;
         }
 
-        private Builder get() {
+        public Builder get() {
             this.request.method = HttpMethod.GET;
             return this;
         }
 
-        private Builder post() {
+        public Builder post(String body) {
+            this.request.body = body;
             this.request.method = HttpMethod.POST;
             return this;
         }
 
-        private Builder put() {
+        public Builder put(String body) {
+            this.request.body = body;
             this.request.method = HttpMethod.PUT;
             return this;
         }
 
-        private Builder delete() {
+        public Builder delete(String body) {
+            this.request.body = body;
             this.request.method = HttpMethod.DELETE;
             return this;
         }
 
-        private Builder body(String body) {
-            this.request.body = body;
+        public Builder delete() {
+            this.request.method = HttpMethod.DELETE;
             return this;
         }
+
 
         public HttpRequest build() {
             return this.request;
