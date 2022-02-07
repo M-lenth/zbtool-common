@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * Classname: FastDfsClientUtil <br>
+ * Classname: FileUtil <br>
  * Description: <p>  </p>  <br>
  *
  * @author zhangbin
@@ -73,6 +73,21 @@ public class FileUtil {
             return null;
         }
         return name.substring(0, index);
+    }
+
+    /**
+     * 根据文件对象，构造上传入参
+     *
+     * @param file 文件对象
+     * @return 上传文件对象
+     */
+    public static FastDfsFile createByFile(File file) {
+        FastDfsFile dfsFile = new FastDfsFile();
+        dfsFile.setAuthor("张斌");
+        dfsFile.setContent(getByteArray(file));
+        dfsFile.setExt(getExt(file));
+        dfsFile.setName(getNameWithoutExt(file));
+        return dfsFile;
     }
 
 }

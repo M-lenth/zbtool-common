@@ -1,6 +1,5 @@
 package com.zhangbin.tool.common.filestorage;
 
-import com.zhangbin.tool.common.exception.InitializedException;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
@@ -31,7 +30,7 @@ public class StorageManager {
      */
     public static void init(String conf) throws IOException, MyException {
         if (INITIALIZED.get()) {
-            throw new InitializedException();
+            throw new RuntimeException("已初始化过");
         }
         // 未初始化过
         ClientGlobal.init(conf);
@@ -43,7 +42,7 @@ public class StorageManager {
      *
      * @return Tracker
      */
-    public TrackerServer getTrackerServer() throws IOException {
+    public static TrackerServer getTrackerServer() throws IOException {
         TrackerClient trackerClient = new TrackerClient();
         return trackerClient.getConnection();
     }
@@ -51,7 +50,7 @@ public class StorageManager {
     /**
      * 获取StorageClient客户端
      */
-    public StorageClient getStorageClient() throws IOException {
+    public static StorageClient getStorageClient() throws IOException {
         TrackerServer server = getTrackerServer();
         return new StorageClient(server, null);
     }
@@ -62,7 +61,7 @@ public class StorageManager {
      * @param file 文件封装信息
      * @return 文件在服务器的信息 ip:port/[0]/[1]
      */
-    public String[] upload(FastDfsFile file) {
+    public static String[] upload(FastDfsFile file) {
         // 创建 meta_list数组
         NameValuePair[] metaList = new NameValuePair[1];
         // 使用文件作者创建meta_list对象
@@ -86,7 +85,7 @@ public class StorageManager {
      * @param remoteFilename 文件在服务器的虚拟磁盘全路径
      * @return 文件的流 需要处理
      */
-    public byte[] download(String groupName, String remoteFilename) {
+    public static byte[] download(String groupName, String remoteFilename) {
         try {
             // 获取StorageClient对象
             StorageClient storageClient = getStorageClient();
@@ -105,7 +104,7 @@ public class StorageManager {
      * @param remoteFilename 文件在服务器上的虚拟全路径
      * @return 文件信息 FileInfo
      */
-    public FileInfo getFileInfo(String groupName, String remoteFilename) {
+    public static FileInfo getFileInfo(String groupName, String remoteFilename) {
         FileInfo info = null;
         try {
             // 获取连接
@@ -125,7 +124,7 @@ public class StorageManager {
      * @param remoteFilename 虚拟磁盘全路径
      * @return 组的信息 ServerInfo[]
      */
-    public ServerInfo[] getGroupInfo(String groupName, String remoteFilename) {
+    public static ServerInfo[] getGroupInfo(String groupName, String remoteFilename) {
         ServerInfo[] infos = null;
         try {
             // 创建TrackerClient对象
@@ -146,7 +145,7 @@ public class StorageManager {
      * @param groupName 组名
      * @return Storage信息 StorageServer
      */
-    public StorageServer getStorage(String groupName) {
+    public static StorageServer getStorage(String groupName) {
         StorageServer storage = null;
         try {
             // 创建TrackerClient对象
@@ -166,7 +165,7 @@ public class StorageManager {
      *
      * @return TrackerServer的URL
      */
-    public String getTrackerUrl() {
+    public static String getTrackerUrl() {
         String url = null;
         try {
             // 获得TrackerServer的信息
@@ -187,7 +186,7 @@ public class StorageManager {
      * @param remoteFilename 文件在服务器的虚拟全路径
      * @return 整形 Integer
      */
-    public Integer delete(String groupName, String remoteFilename) {
+    public static Integer delete(String groupName, String remoteFilename) {
         try {
             // 获得StorageClient对象
             StorageClient client = getStorageClient();

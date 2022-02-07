@@ -36,5 +36,14 @@ public class DateConstant {
      * yyyyMMddHHmmss
      */
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+    /**
+     * yyyyMMddHHmmss
+     */
+    public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
 
+    public static final Long SECOND = 1000L;
+    public static final Long MINUTE = 60L * SECOND;
+    public static final Long HOUR = 60L * MINUTE;
+    public static final Long DAY = 24 * HOUR;
+    public static final Long WEEK = 7 * DAY;
 }
