@@ -25,6 +25,9 @@ public class HttpRequest {
      */
     private String body = "";
 
+    private HttpRequest() {
+    }
+
     public String getUrl() {
         return url;
     }
