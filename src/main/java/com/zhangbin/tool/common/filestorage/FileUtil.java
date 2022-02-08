@@ -90,4 +90,39 @@ public class FileUtil {
         return dfsFile;
     }
 
+
+    /**
+     * 创建新文件
+     *
+     * @param path 文件路径
+     * @return 新文件
+     */
+    public static File createNewFile(String path) throws IOException {
+        File file = new File(path);
+        if (!file.exists()) {
+            boolean newFile = file.createNewFile();
+            if (!newFile) {
+                return null;
+            }
+        }
+        return file;
+    }
+
+    /**
+     * 创建新目录
+     *
+     * @param path 目录路径
+     * @return 目录文件
+     */
+    public static File createNewDirectory(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            boolean flag = file.mkdirs();
+            if (!flag) {
+                return null;
+            }
+        }
+        return file;
+    }
+
 }
