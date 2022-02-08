@@ -1,9 +1,6 @@
 package com.zhangbin.tool.common.filestorage;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Classname: FileUtil <br>
@@ -123,6 +120,36 @@ public class FileUtil {
             }
         }
         return file;
+    }
+
+    /**
+     * 将字符串数据写到文件中
+     *
+     * @param file    目标文件
+     * @param content 需要写入的数据
+     */
+    public static void write(File file, String content) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.write(content);
+        writer.flush();
+        writer.close();
+    }
+
+    /**
+     * 从文件中读取字符串
+     *
+     * @param file 文件
+     * @return 字符串
+     */
+    public static String read(File file) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        FileReader reader = new FileReader(file);
+        int ch;
+        while ((ch = reader.read()) != -1) {
+            builder.append(ch);
+        }
+        reader.close();
+        return builder.toString();
     }
 
     /**
