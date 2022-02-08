@@ -146,7 +146,7 @@ public class FileUtil {
         FileReader reader = new FileReader(file);
         int ch;
         while ((ch = reader.read()) != -1) {
-            builder.append(ch);
+            builder.append((char) ch);
         }
         reader.close();
         return builder.toString();
