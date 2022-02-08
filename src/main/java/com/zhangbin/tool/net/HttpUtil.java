@@ -43,6 +43,26 @@ public class HttpUtil {
     }
 
     /**
+     * 发送请求
+     *
+     * @param request 请求信息
+     * @return 响应信息
+     */
+    public static HttpResponse sendSync(HttpRequest request) throws IOException {
+        // 响应信息
+        final HttpResponse resp = new HttpResponse();
+        // 构建OKhttp对象
+        OkHttpClient client = new OkHttpClient();
+        // 获取访问请求对象
+        Request req = getRequest(request);
+        // 访问网络
+        Response response = client.newCall(req).execute();
+        // 返回JSON数据
+        resp.setSuccess(response.body().string(), "返回成功");
+        return resp;
+    }
+
+    /**
      * 下载内容，一般使用get方式
      *
      * @param request 请求信息
