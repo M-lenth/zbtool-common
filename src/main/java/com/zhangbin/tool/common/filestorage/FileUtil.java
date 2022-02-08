@@ -125,4 +125,13 @@ public class FileUtil {
         return file;
     }
 
+    /**
+     * 删除文件
+     *
+     * @param file 需要删除的文件
+     */
+    public static void clear(File file) {
+        file.delete();
+    }
+
 }
