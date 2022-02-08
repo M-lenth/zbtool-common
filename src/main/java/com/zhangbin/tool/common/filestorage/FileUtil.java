@@ -142,8 +142,9 @@ public class FileUtil {
      * @param content 追加的数据
      */
     public static void append(File file, String content) throws IOException {
+        String old = read(file);
         FileWriter writer = new FileWriter(file);
-        writer.append(content);
+        writer.append(old).append(content);
         writer.flush();
         writer.close();
     }
