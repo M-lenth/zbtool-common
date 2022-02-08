@@ -3,7 +3,7 @@ package com.zhangbin.tool.common.filestorage;
 import java.io.*;
 
 /**
- * Classname: FileUtil <br>
+ * ClassName: FileUtil <br>
  * Description: <p>  </p>  <br>
  *
  * @author zhangbin
@@ -136,6 +136,19 @@ public class FileUtil {
     }
 
     /**
+     * 向文件中追加字符串数据
+     *
+     * @param file    文件
+     * @param content 追加的数据
+     */
+    public static void append(File file, String content) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.append(content);
+        writer.flush();
+        writer.close();
+    }
+
+    /**
      * 从文件中读取字符串
      *
      * @param file 文件
@@ -158,7 +171,10 @@ public class FileUtil {
      * @param file 需要删除的文件
      */
     public static void clear(File file) {
-        file.delete();
+        boolean delete = file.delete();
+        if (!delete) {
+            throw new RuntimeException("删除文件[" + file.getName() + "] 失败");
+        }
     }
 
 }
