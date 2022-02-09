@@ -198,4 +198,16 @@ public class StorageManager {
         return null;
     }
 
+    /**
+     * 获取网络访问地址
+     *
+     * @param ip   服务器IP
+     * @param port 服务器开放端口
+     * @param url  FastDFS服务器里面的虚拟磁盘路径数组
+     * @return 实际访问文件服务器的网络地址
+     */
+    public static String getHttpUrl(String ip, String port, String[] url) {
+        return "http://" + ip + ":" + port + "/" + url[0] + "/" + url[1];
+    }
+
 }
