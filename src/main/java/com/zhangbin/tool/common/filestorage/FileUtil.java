@@ -80,7 +80,7 @@ public class FileUtil {
      */
     public static FastDfsFile createByFile(File file) {
         FastDfsFile dfsFile = new FastDfsFile();
-        dfsFile.setAuthor("张斌");
+        dfsFile.setAuthor(System.getenv("USERNAME"));
         dfsFile.setContent(getByteArray(file));
         dfsFile.setExt(getExt(file));
         dfsFile.setName(getNameWithoutExt(file));
