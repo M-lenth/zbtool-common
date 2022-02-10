@@ -74,6 +74,19 @@ public class Result<T> {
     }
 
     /**
+     * 成功返回值
+     *
+     * @param code    返回代码
+     * @param message 返回消息
+     * @param data    保存的数据
+     * @param <T>     返回类型
+     * @return {@link Result}
+     */
+    public static <T> Result<T> ok(Integer code, String message, T data) {
+        return new Result<>(code, message, data);
+    }
+
+    /**
      * 失败返回信息
      *
      * @param message 失败信息
