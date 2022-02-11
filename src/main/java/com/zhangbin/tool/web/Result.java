@@ -1,5 +1,7 @@
 package com.zhangbin.tool.web;
 
+import com.alibaba.fastjson.JSONObject;
+
 import static com.zhangbin.tool.common.constant.ResultConstant.*;
 
 /**
@@ -47,6 +49,16 @@ public class Result<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    /**
+     * 因为使用网络传输过程中会出现对象类型变化的情况，使用此方法转换为对应的类型
+     *
+     * @param clazz 转换的目标类型
+     * @return 目标类型对象
+     */
+    public <R> R parse(Class<R> clazz) {
+        return ((JSONObject) this.getData()).toJavaObject(clazz);
     }
 
     /**
