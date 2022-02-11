@@ -55,6 +55,10 @@ public class HttpRequest {
     public static class Builder {
         private final HttpRequest request = new HttpRequest();
 
+        public Builder() {
+            request.method = HttpMethod.GET;
+        }
+
         public Builder url(String url) {
             this.request.url = url;
             return this;

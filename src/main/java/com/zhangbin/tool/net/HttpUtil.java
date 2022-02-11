@@ -1,5 +1,7 @@
 package com.zhangbin.tool.net;
 
+import com.zhangbin.tool.common.util.StringUtils;
+import com.zhangbin.tool.net.enumeration.HttpMethod;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -20,6 +22,7 @@ public class HttpUtil {
      * @return 响应信息
      */
     public static HttpResponse send(HttpRequest request) {
+        checkRequest(request);
         // 响应信息
         final HttpResponse resp = new HttpResponse();
         // 构建OKhttp对象
@@ -49,6 +52,7 @@ public class HttpUtil {
      * @return 响应信息
      */
     public static HttpResponse sendSync(HttpRequest request) throws IOException {
+        checkRequest(request);
         // 响应信息
         final HttpResponse resp = new HttpResponse();
         // 构建OKhttp对象
@@ -69,6 +73,7 @@ public class HttpUtil {
      * @return 响应信息 data为byte[]
      */
     public static HttpResponse download(HttpRequest request) {
+        checkRequest(request);
         final HttpResponse resp = new HttpResponse();
         OkHttpClient client = new OkHttpClient();
         Request req = new Request.Builder()
@@ -97,6 +102,7 @@ public class HttpUtil {
      * @return 响应信息
      */
     public static HttpResponse upload(HttpRequest request) {
+        checkRequest(request);
         // 访问文件类型
         MediaType mediaTypeJson = MediaType.parse("application/json; charset=utf-8");
         // 访问请求信息
@@ -144,6 +150,17 @@ public class HttpUtil {
                 return builder.delete(body).url(request.getUrl()).build();
             default:
                 return null;
+        }
+    }
+
+    private static void checkRequest(HttpRequest request) {
+        if (StringUtils.isEmpty(request.getUrl())) {
+            throw new RuntimeException("The URL is empty!Add URL please!");
+        }
+        if (request.getMethod() != HttpMethod.GET && request.getMethod() != HttpMethod.DELETE) {
+            if (StringUtils.isEmpty(request.getBody())) {
+                throw new RuntimeException("The request body is empty. Please add the request body or modify the request method to 'GET' or 'DELETE'");
+            }
         }
     }
 
