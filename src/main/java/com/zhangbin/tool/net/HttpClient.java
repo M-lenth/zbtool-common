@@ -111,7 +111,7 @@ public class HttpClient {
      * @param <REQ>  请求体类型泛型
      * @return 请求参数
      */
-    public static <REQ> HttpRequest getRequest(String url, REQ body, HttpMethod method) {
+    private static <REQ> HttpRequest getRequest(String url, REQ body, HttpMethod method) {
         switch (method) {
             case GET:
                 return new HttpRequest.Builder()
