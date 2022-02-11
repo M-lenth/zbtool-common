@@ -58,16 +58,16 @@ public class HttpClient {
      * 网络请求GET的同步实现
      * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
      */
-    public static <REQ> Result<?> executeGetSync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendSync, HttpMethod.GET);
+    public static Result<?> executeGetSync(String url) {
+        return execute(url, "", HttpUtil::sendSync, HttpMethod.GET);
     }
 
     /**
      * 网络请求GET的异步实现
      * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
      */
-    public static <REQ> Result<?> executeGetAsync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendAsync, HttpMethod.GET);
+    public static Result<?> executeGetAsync(String url) {
+        return execute(url, "", HttpUtil::sendAsync, HttpMethod.GET);
     }
 
     /**
