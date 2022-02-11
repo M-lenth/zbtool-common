@@ -1,6 +1,8 @@
 package com.zhangbin.tool.net;
 
 import com.alibaba.fastjson.JSON;
+import com.zhangbin.tool.common.util.StringUtils;
+import com.zhangbin.tool.net.enumeration.HttpMethod;
 import com.zhangbin.tool.net.function.RequestInvoke;
 import com.zhangbin.tool.web.Result;
 
@@ -23,12 +25,9 @@ public class HttpClient {
      * @param <REQ> 请求参数类型泛型
      * @return 请求服务器返回的数据
      */
-    public static <REQ> Result<?> execute(String url, REQ body, RequestInvoke invoke) {
+    public static <REQ> Result<?> execute(String url, REQ body, RequestInvoke invoke, HttpMethod method) {
         // 构建请求参数
-        HttpRequest req = new HttpRequest.Builder()
-            .url(url)
-            .post(JSON.toJSONString(body))
-            .build();
+        HttpRequest req = getRequest(url, body, method);
         try {
             // 发起请求
             HttpResponse response = invoke.execute(req);
@@ -40,19 +39,105 @@ public class HttpClient {
     }
 
     /**
-     * 网络请求的同步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke)}
+     * 网络请求POST的同步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
      */
-    public static <REQ> Result<?> executeSync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendSync);
+    public static <REQ> Result<?> executePostSync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendSync, HttpMethod.POST);
     }
 
     /**
-     * 网络请求的异步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke)}
+     * 网络请求POST的异步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
      */
-    public static <REQ> Result<?> executeAsync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendAsync);
+    public static <REQ> Result<?> executePostAsync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendAsync, HttpMethod.POST);
+    }
+
+    /**
+     * 网络请求GET的同步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     */
+    public static <REQ> Result<?> executeGetSync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendSync, HttpMethod.GET);
+    }
+
+    /**
+     * 网络请求GET的异步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     */
+    public static <REQ> Result<?> executeGetAsync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendAsync, HttpMethod.GET);
+    }
+
+    /**
+     * 网络请求PUT的同步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     */
+    public static <REQ> Result<?> executePutSync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendSync, HttpMethod.PUT);
+    }
+
+    /**
+     * 网络请求PUT的异步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     */
+    public static <REQ> Result<?> executePutAsync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendAsync, HttpMethod.PUT);
+    }
+
+    /**
+     * 网络请求DELETE的同步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     */
+    public static <REQ> Result<?> executeDeleteSync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendSync, HttpMethod.DELETE);
+    }
+
+    /**
+     * 网络请求DELETE的异步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     */
+    public static <REQ> Result<?> executeDeleteAsync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendAsync, HttpMethod.DELETE);
+    }
+
+    /**
+     * 获取请求参数
+     *
+     * @param url    请求地址
+     * @param body   请求体
+     * @param method 请求方式
+     * @param <REQ>  请求体类型泛型
+     * @return 请求参数
+     */
+    public static <REQ> HttpRequest getRequest(String url, REQ body, HttpMethod method) {
+        switch (method) {
+            case GET:
+                return new HttpRequest.Builder()
+                    .get()
+                    .url(url)
+                    .build();
+            case POST:
+                return new HttpRequest.Builder()
+                    .url(url)
+                    .post(JSON.toJSONString(body))
+                    .build();
+            case PUT:
+                return new HttpRequest.Builder()
+                    .url(url)
+                    .put(JSON.toJSONString(body))
+                    .build();
+            case DELETE:
+                String requestBody = JSON.toJSONString(body);
+                requestBody = StringUtils.isEmpty(requestBody) ? "" : requestBody;
+                return new HttpRequest.Builder()
+                    .url(url)
+                    .delete(requestBody)
+                    .build();
+            default:
+                return null;
+        }
     }
 
 
