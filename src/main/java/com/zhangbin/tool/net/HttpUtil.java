@@ -21,7 +21,7 @@ public class HttpUtil {
      * @param request 请求信息
      * @return 响应信息
      */
-    public static HttpResponse send(HttpRequest request) {
+    public static HttpResponse sendAsync(HttpRequest request) {
         checkRequest(request);
         // 响应信息
         final HttpResponse resp = new HttpResponse();
