@@ -38,4 +38,22 @@ public class HttpClient {
             return null;
         }
     }
+
+    /**
+     * 网络请求的同步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke)}
+     */
+    public static <REQ> Result<?> executeSync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendSync);
+    }
+
+    /**
+     * 网络请求的异步实现
+     * {@link HttpClient#execute(String, Object, RequestInvoke)}
+     */
+    public static <REQ> Result<?> executeAsync(String url, REQ body) {
+        return execute(url, body, HttpUtil::sendAsync);
+    }
+
+
 }
