@@ -21,7 +21,7 @@ public class HttpUtil {
      * @param request 请求信息
      * @return 响应信息
      */
-    public static HttpResponse sendAsync(HttpRequest request) {
+    protected static HttpResponse sendAsync(HttpRequest request) {
         checkRequest(request);
         // 响应信息
         final HttpResponse resp = new HttpResponse();
@@ -51,7 +51,7 @@ public class HttpUtil {
      * @param request 请求信息
      * @return 响应信息
      */
-    public static HttpResponse sendSync(HttpRequest request) throws IOException {
+    protected static HttpResponse sendSync(HttpRequest request) throws IOException {
         checkRequest(request);
         // 响应信息
         final HttpResponse resp = new HttpResponse();
@@ -72,7 +72,7 @@ public class HttpUtil {
      * @param request 请求信息
      * @return 响应信息 data为byte[]
      */
-    public static HttpResponse download(HttpRequest request) {
+    protected static HttpResponse download(HttpRequest request) {
         checkRequest(request);
         final HttpResponse resp = new HttpResponse();
         OkHttpClient client = new OkHttpClient();
@@ -101,7 +101,7 @@ public class HttpUtil {
      * @param request 上传信息
      * @return 响应信息
      */
-    public static HttpResponse upload(HttpRequest request) {
+    protected static HttpResponse upload(HttpRequest request) {
         checkRequest(request);
         // 访问文件类型
         MediaType mediaTypeJson = MediaType.parse("application/json; charset=utf-8");
@@ -163,5 +163,39 @@ public class HttpUtil {
             }
         }
     }
+
+    /**
+     * 获取RestFul风格的地址
+     *
+     * @param ip   IP地址或者域名
+     * @param port 端口号
+     * @param url  访问路径 需要包含路径参数
+     * @return 真实访问路径
+     */
+    public static String getRestFulUrl(String ip, int port, String url) {
+        HttpUrl.Builder builder = new HttpUrl.Builder().scheme("http")
+            .host(ip)
+            .port(port);
+        String[] params = getRestFulParam(url);
+        for (String param : params) {
+            builder.addPathSegment(param);
+        }
+        return builder.build().toString();
+    }
+
+    /**
+     * 获取访问路径的数组
+     *
+     * @param url 系统访问路径
+     * @return 访问路径数组
+     */
+    private static String[] getRestFulParam(String url) {
+        boolean flag = url.charAt(0) == '/';
+        if (flag) {
+            url = url.substring(1);
+        }
+        return url.split("/");
+    }
+
 
 }
