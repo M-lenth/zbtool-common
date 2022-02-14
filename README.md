@@ -98,61 +98,52 @@ http://120.24.205.42:8081/nexus/content/groups/public/
 
   
 
-##### mybatis
-
-针对于Mybatis框架的一些操作，目前仅有一个拦截器
-
-在基于Spring框架开发的应用中，可以使用注解@Bean将类注册为一个实体交于Spring容器管理
-
-```java
-@Bean
-public MybatisSqlPrinter mybatisSqlPrinter () {
-	return new MybatisSqlPrinter ();
-}
-```
-
 ##### net
 
 基于OKHttp框架封装的网络访问，主要便于Android访问
 
-- 用于普通消息发送到服务器，使用GET方式发送
+封装了一个私有方法: 供其他方法调用
 
-  > ```java
-  > public static void main(String[] args) {
-  >     HttpRequest request = new HttpRequest.Builder()
-  >         .url("")
-  >         .get()
-  >         .build();
-  >     HttpResponse response = HttpUtil.send(request);
-  >     Object data = response.getData();
-  > }
-  > ```
+  ```java
+  public static <REQ> Result<?> execute(String url, REQ body, RequestInvoke invoke, HttpMethod method) {
+      
+  }
+  ```
 
-  除GET方式外，还可以使用POST方式:
+POST调用同步请求，使用如下:
 
-  > ```java
-  > public static void main(String[] args) {
-  >     HttpRequest request = new HttpRequest.Builder()
-  >         .url("http://localhost:8080/test")
-  >         .post("{\"key\": \"request body\"}")
-  >         .build();
-  >     HttpResponse response = HttpUtil.send(request);
-  >     Object data = response.getData();
-  > }
-  > ```
+  ```
+  execute(url, body, HttpUtil::sendSync, HttpMethod.POST);
+  ```
 
-- 数据下载，下载为字节数组
+POST调用异步请求，使用如下:
 
-  > ```java
-  > public static void main(String[] args) {
-  >     HttpRequest request = new HttpRequest.Builder()
-  >         .url("http://localhost:8080/test")
-  >         .post("{\"key\": \"request body\"}")
-  >         .build();
-  >     HttpResponse download = HttpUtil.download(request);
-  >     byte[] bytes = (byte[])download.getData();
-  > } 
-  > ```
+  ```java
+  execute(url, body, HttpUtil::sendAsync, HttpMethod.POST);
+  ```
+
+还封装了方法:
+
+针对GET的:
+
+```
+executeGetSync(String url);
+executeGetAsync(String url);
+```
+
+PUT:
+
+```
+executePutSync(String url, REQ body);
+executePutAsync(String url, REQ body)
+```
+
+DELETE:
+
+```
+executeDeleteSync(String url, REQ body);
+executeDeleteAsync(String url, REQ body)
+```
 
 ##### web
 
@@ -160,7 +151,11 @@ public MybatisSqlPrinter mybatisSqlPrinter () {
 
 - Result类，规定统一返回数据类型，从系统返回的数据类型使用此类封装，并自定义返回代码以及返回信息
 
+提供方法:
 
+parse将data从JSONObject转换为对象
+
+parseList将data从JSONArray转换为List列表
 
 
 
