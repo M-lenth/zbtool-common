@@ -1,6 +1,9 @@
 package com.zhangbin.tool.web;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
+import java.util.List;
 
 import static com.zhangbin.tool.common.constant.ResultConstant.*;
 
@@ -58,7 +61,23 @@ public class Result<T> {
      * @return 目标类型对象
      */
     public <R> R parse(Class<R> clazz) {
+        if (this.data instanceof JSONArray) {
+            throw new RuntimeException("数据类型为JSONArray，请使用parseList方法");
+        }
         return ((JSONObject) this.getData()).toJavaObject(clazz);
+    }
+
+    /**
+     * 因为使用网络传输过程中会出现对象类型变化的情况，使用此方法转换为对应的类型
+     *
+     * @param clazz 转换的目标类型
+     * @return 目标类型对象
+     */
+    public <R> List<R> parseList(Class<R> clazz) {
+        if (this.data instanceof JSONObject) {
+            throw new RuntimeException("数据类型为JSONArray，请使用parse方法");
+        }
+        return ((JSONArray) this.getData()).toJavaList(clazz);
     }
 
     /**
