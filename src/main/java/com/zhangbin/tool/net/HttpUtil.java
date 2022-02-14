@@ -72,7 +72,7 @@ public class HttpUtil {
      * @param request 请求信息
      * @return 响应信息 data为byte[]
      */
-    protected static HttpResponse download(HttpRequest request) {
+    protected static HttpResponse downloadAsync(HttpRequest request) {
         checkRequest(request);
         final HttpResponse resp = new HttpResponse();
         OkHttpClient client = new OkHttpClient();
@@ -92,6 +92,25 @@ public class HttpUtil {
                 resp.setSuccess(response.body().bytes(), "返回成功");
             }
         });
+        return resp;
+    }
+
+    /**
+     * 下载内容，一般使用get方式
+     *
+     * @param request 请求信息
+     * @return 响应信息 data为byte[]
+     */
+    protected static HttpResponse downloadSync(HttpRequest request) throws IOException {
+        checkRequest(request);
+        final HttpResponse resp = new HttpResponse();
+        OkHttpClient client = new OkHttpClient();
+        Request req = new Request.Builder()
+            .url(request.getUrl())
+            .get()
+            .build();
+        Response response = client.newCall(req).execute();
+        resp.setData(response.body().bytes());
         return resp;
     }
 

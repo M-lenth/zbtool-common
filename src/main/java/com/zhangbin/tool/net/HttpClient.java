@@ -103,6 +103,31 @@ public class HttpClient {
     }
 
     /**
+     * 同步下载
+     *
+     * @param url 下载地址
+     * @return 下载数据
+     */
+    public static Result<?> downloadSync(String url) throws IOException {
+        HttpRequest request = getRequest(url, "", HttpMethod.GET);
+        HttpResponse response = HttpUtil.downloadSync(request);
+        return Result.ok(response.getData());
+    }
+
+    /**
+     * 异步下载
+     *
+     * @param url 下载地址
+     * @return 下载数据
+     */
+    public static Result<?> downloadAsync(String url) throws IOException {
+        HttpRequest request = getRequest(url, "", HttpMethod.GET);
+        HttpResponse response = HttpUtil.downloadAsync(request);
+        return Result.ok(response.getData());
+    }
+
+
+    /**
      * 获取请求参数
      *
      * @param url    请求地址
