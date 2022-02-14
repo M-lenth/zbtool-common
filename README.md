@@ -5,9 +5,8 @@
 zbtool-common，用于Java开发使用的一个工具类内容。其中包含以下几个模块
 
 1. common
-2. mybatis
-3. net
-4. web
+2. net
+3. web
 
 #### 软件架构
 
