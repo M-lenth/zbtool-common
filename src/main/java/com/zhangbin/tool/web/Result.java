@@ -61,10 +61,11 @@ public class Result<T> {
      * @return 目标类型对象
      */
     public <R> R parse(Class<R> clazz) {
-        if (this.data instanceof JSONArray) {
-            throw new RuntimeException("数据类型为JSONArray，请使用parseList方法");
+        if (this.data instanceof JSONObject) {
+            return ((JSONObject) this.getData()).toJavaObject(clazz);
         }
-        return ((JSONObject) this.getData()).toJavaObject(clazz);
+        String name = this.getData().getClass().getName();
+        throw new RuntimeException("数据类型为" + name + "，请使用parseList方法");
     }
 
     /**
@@ -74,10 +75,11 @@ public class Result<T> {
      * @return 目标类型对象
      */
     public <R> List<R> parseList(Class<R> clazz) {
-        if (this.data instanceof JSONObject) {
-            throw new RuntimeException("数据类型为JSONArray，请使用parse方法");
+        if (this.data instanceof JSONArray) {
+            return ((JSONArray) this.getData()).toJavaList(clazz);
         }
-        return ((JSONArray) this.getData()).toJavaList(clazz);
+        String name = this.getData().getClass().getName();
+        throw new RuntimeException("数据类型为" + name + "，请使用parse方法");
     }
 
     /**
