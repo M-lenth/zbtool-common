@@ -25,13 +25,12 @@ public class HttpClient {
      * @param <REQ> 请求参数类型泛型
      * @return 请求服务器返回的数据
      */
-    public static <REQ> Result<?> execute(String url, REQ body, RequestInvoke invoke, HttpMethod method) {
+    public static <REQ> HttpResponse execute(String url, REQ body, RequestInvoke invoke, HttpMethod method) {
         // 构建请求参数
         HttpRequest req = getRequest(url, body, method);
         try {
             // 发起请求
-            HttpResponse response = invoke.execute(req);
-            return JSON.parseObject((String) response.getData(), Result.class);
+            return invoke.execute(req);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -39,67 +38,84 @@ public class HttpClient {
     }
 
     /**
+     * 网络请求
+     *
+     * @param url   请求地址
+     * @param body  请求参数
+     * @param <REQ> 请求参数类型泛型
+     * @return 请求服务器返回的数据
+     */
+    public static <REQ> Result<?> executeResult(String url, REQ body, RequestInvoke invoke, HttpMethod method) {
+        HttpResponse response = execute(url, body, invoke, method);
+        if (response != null) {
+            return JSON.parseObject((String) response.getData(), Result.class);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * 网络请求POST的同步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     * {@link HttpClient#executeResult(String, Object, RequestInvoke, HttpMethod)}
      */
     public static <REQ> Result<?> executePostSync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendSync, HttpMethod.POST);
+        return executeResult(url, body, HttpUtil::sendSync, HttpMethod.POST);
     }
 
     /**
      * 网络请求POST的异步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     * {@link HttpClient#executeResult(String, Object, RequestInvoke, HttpMethod)}
      */
     public static <REQ> Result<?> executePostAsync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendAsync, HttpMethod.POST);
+        return executeResult(url, body, HttpUtil::sendAsync, HttpMethod.POST);
     }
 
     /**
      * 网络请求GET的同步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     * {@link HttpClient#executeResult(String, Object, RequestInvoke, HttpMethod)}
      */
     public static Result<?> executeGetSync(String url) {
-        return execute(url, "", HttpUtil::sendSync, HttpMethod.GET);
+        return executeResult(url, "", HttpUtil::sendSync, HttpMethod.GET);
     }
 
     /**
      * 网络请求GET的异步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     * {@link HttpClient#executeResult(String, Object, RequestInvoke, HttpMethod)}
      */
     public static Result<?> executeGetAsync(String url) {
-        return execute(url, "", HttpUtil::sendAsync, HttpMethod.GET);
+        return executeResult(url, "", HttpUtil::sendAsync, HttpMethod.GET);
     }
 
     /**
      * 网络请求PUT的同步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     * {@link HttpClient#executeResult(String, Object, RequestInvoke, HttpMethod)}
      */
     public static <REQ> Result<?> executePutSync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendSync, HttpMethod.PUT);
+        return executeResult(url, body, HttpUtil::sendSync, HttpMethod.PUT);
     }
 
     /**
      * 网络请求PUT的异步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     * {@link HttpClient#executeResult(String, Object, RequestInvoke, HttpMethod)}
      */
     public static <REQ> Result<?> executePutAsync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendAsync, HttpMethod.PUT);
+        return executeResult(url, body, HttpUtil::sendAsync, HttpMethod.PUT);
     }
 
     /**
      * 网络请求DELETE的同步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     * {@link HttpClient#executeResult(String, Object, RequestInvoke, HttpMethod)}
      */
     public static <REQ> Result<?> executeDeleteSync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendSync, HttpMethod.DELETE);
+        return executeResult(url, body, HttpUtil::sendSync, HttpMethod.DELETE);
     }
 
     /**
      * 网络请求DELETE的异步实现
-     * {@link HttpClient#execute(String, Object, RequestInvoke, HttpMethod)}
+     * {@link HttpClient#executeResult(String, Object, RequestInvoke, HttpMethod)}
      */
     public static <REQ> Result<?> executeDeleteAsync(String url, REQ body) {
-        return execute(url, body, HttpUtil::sendAsync, HttpMethod.DELETE);
+        return executeResult(url, body, HttpUtil::sendAsync, HttpMethod.DELETE);
     }
 
     /**
