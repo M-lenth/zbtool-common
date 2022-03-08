@@ -55,7 +55,7 @@ public class StringUtils {
     /**
      * 下载保存时中文文件名的字符编码转换方法
      */
-    public String toUTF8String(String str) {
+    public static String toUTF8String(String str) {
         StringBuilder sb = new StringBuilder();
         int len = str.length();
         for (int i = 0; i < len; i++) {
