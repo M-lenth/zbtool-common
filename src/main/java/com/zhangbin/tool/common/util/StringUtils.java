@@ -1,5 +1,7 @@
 package com.zhangbin.tool.common.util;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * Classname: StringUtils <br>
  * Description: <p>  </p>  <br>
@@ -47,6 +49,35 @@ public class StringUtils {
             }
         }
         return true;
+    }
+
+
+    /**
+     * 下载保存时中文文件名的字符编码转换方法
+     */
+    public String toUTF8String(String str) {
+        StringBuilder sb = new StringBuilder();
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            // 取出字符中的每个字符
+            char c = str.charAt(i);
+            // Unicode码值为0~255时，不做处理
+            if (c <= 255) {
+                sb.append(c);
+            } else { // 转换 UTF-8 编码
+                byte[] b;
+                b = Character.toString(c).getBytes(StandardCharsets.UTF_8);
+                // 转换为%HH的字符串形式
+                for (int value : b) {
+                    int k = value;
+                    if (k < 0) {
+                        k &= 255;
+                    }
+                    sb.append("%").append(Integer.toHexString(k).toUpperCase());
+                }
+            }
+        }
+        return sb.toString();
     }
 
 }
