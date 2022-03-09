@@ -6,8 +6,9 @@
 
     <groupId>com.zhangbin</groupId>
     <artifactId>zbtool-common</artifactId>
-    <version>1.0.2</version>
-    <description>自写的工具类包，变化IdWorker为UUID方式生成</description>
+    <version>1.0.1</version>
+    <description>自写的工具类包，此版本新增集成Okhttp</description>
+
     <dependencies>
         <!-- FastDFS -->
         <dependency>
