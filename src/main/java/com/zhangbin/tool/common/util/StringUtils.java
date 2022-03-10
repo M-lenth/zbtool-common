@@ -2,6 +2,8 @@ package com.zhangbin.tool.common.util;
 
 import java.nio.charset.StandardCharsets;
 
+import static com.zhangbin.tool.common.util.CharUtils.isUpper;
+
 /**
  * Classname: StringUtils <br>
  * Description: <p>  </p>  <br>
@@ -78,6 +80,49 @@ public class StringUtils {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 下划线转驼峰命名
+     *
+     * @param str 输入的原串
+     * @return 转换后的字符串
+     */
+    public static String underLineToHump(String str) {
+        StringBuilder builder = new StringBuilder();
+        boolean flag = false;
+        for (char c : str.toCharArray()) {
+            if (c == '_') {
+                flag = true;
+                continue;
+            }
+            if (flag) {
+                String upperCase = (c + "").toUpperCase();
+                builder.append(upperCase);
+                flag = false;
+                continue;
+            }
+            builder.append(c);
+        }
+        return builder.toString();
+    }
+
+    /**
+     * 驼峰转下划线
+     *
+     * @param str 原串
+     * @return 下划线表示的字符串
+     */
+    public static String humpToUnderLine(String str) {
+        StringBuilder builder = new StringBuilder();
+        for (char c : str.toCharArray()) {
+            if (isUpper(c)) {
+                builder.append("_").append((char) (c - 'A' + 'a'));
+                continue;
+            }
+            builder.append(c);
+        }
+        return builder.toString();
     }
 
 }
