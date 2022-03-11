@@ -41,6 +41,8 @@ public class DateConstant {
      */
     public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
 
+    public static final String YYYY_MM_DD_HH_MM_EM = "yyyy/MM/dd HH/mm";
+
     public static final Long SECOND = 1000L;
     public static final Long MINUTE = 60L * SECOND;
     public static final Long HOUR = 60L * MINUTE;

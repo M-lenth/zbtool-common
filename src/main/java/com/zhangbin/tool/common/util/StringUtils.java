@@ -23,6 +23,10 @@ public class StringUtils {
         return null == str || "".equals(str);
     }
 
+    public static boolean isNotEmpty(String str) {
+        return !isEmpty(str);
+    }
+
     /**
      * 字符串是否都为空
      *
@@ -83,7 +87,7 @@ public class StringUtils {
     }
 
     /**
-     * 下划线转驼峰命名
+     * 下划线转小驼峰命名
      *
      * @param str 输入的原串
      * @return 转换后的字符串
@@ -108,7 +112,17 @@ public class StringUtils {
     }
 
     /**
-     * 驼峰转下划线
+     * 下划线转大驼峰
+     *
+     * @param str 输入的原串
+     * @return 转换后的字符串
+     */
+    public static String underLineToMaxHump(String str) {
+        return toUpperFirstChar(underLineToHump(str));
+    }
+
+    /**
+     * 小驼峰转下划线
      *
      * @param str 原串
      * @return 下划线表示的字符串
@@ -123,6 +137,43 @@ public class StringUtils {
             builder.append(c);
         }
         return builder.toString();
+    }
+
+    /**
+     * 获取第一个字符串将第一个转换为大写字符
+     */
+    public static String toUpperFirstChar(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * 获取文件后缀名
+     *
+     * @param str 文件名称
+     * @return 后缀
+     */
+    public static String getStringExtend(String str) {
+        int i = str.lastIndexOf(".");
+        if (i == -1) {
+            return str;
+        }
+        return str.substring(i + 1);
+    }
+
+    /**
+     * 将表名转换为类名
+     *
+     * @param tbName 表名
+     * @return 类名
+     */
+    public static String getClassNameByTbName(String tbName) {
+        if (tbName.startsWith("tb_")) {
+            tbName = tbName.substring(3);
+        }
+        if (tbName.startsWith("t_")) {
+            tbName = tbName.substring(2);
+        }
+        return underLineToMaxHump(tbName);
     }
 
 }
