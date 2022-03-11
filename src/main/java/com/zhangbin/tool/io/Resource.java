@@ -36,6 +36,6 @@ public class Resource {
 
     @Override
     public String toString() {
-        return Resource.class.getResource("/").getPath() + path;
+        return file.getName();
     }
 }
