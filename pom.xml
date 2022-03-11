@@ -6,8 +6,8 @@
 
     <groupId>com.zhangbin</groupId>
     <artifactId>zbtool-common</artifactId>
-    <version>1.0.1</version>
-    <description>自写的工具类包，此版本新增集成Okhttp</description>
+    <version>DB-1.0.0</version>
+    <description>关于Mybatis的工具分支</description>
 
     <dependencies>
         <!-- FastDFS -->
