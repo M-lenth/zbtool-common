@@ -1,6 +1,7 @@
 package com.zhangbin.tool.io;
 
 import java.io.*;
+import java.util.Objects;
 
 /**
  * ClassName: Resource <br>
@@ -18,7 +19,7 @@ public class Resource {
 
     public Resource(String path) {
         this.path = path;
-        String rootPath = Resource.class.getResource("/").getPath();
+        String rootPath = Objects.requireNonNull(Resource.class.getResource("/")).getPath();
         this.file = new File(rootPath + path);
     }
 
@@ -32,6 +33,10 @@ public class Resource {
 
     public InputStream getResourceAsInputStream() throws FileNotFoundException {
         return new FileInputStream(file);
+    }
+
+    public String getAbsolutePath() {
+        return this.file.getPath();
     }
 
     @Override
