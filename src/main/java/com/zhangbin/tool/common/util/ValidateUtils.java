@@ -5,13 +5,13 @@ import java.util.Date;
 
 /**
  * ClassName: IdCard <br>
- * Description: <p> 校验身份证号工具类 </p>  <br>
+ * Description: <p> 校验工具类 </p>  <br>
  *
  * @author zhangbin
  * @create 2022/3/16 16:15
  * @since JDK1.8
  */
-public class IdCardValidate {
+public class ValidateUtils {
     /**
      * 身份证号码中的出生日期的格式
      */
@@ -40,13 +40,13 @@ public class IdCardValidate {
      * @param cardNumber 身份证号
      * @return 是否合规
      */
-    public static boolean validate15(String cardNumber) {
+    public static boolean validateId15(String cardNumber) {
         if (null != cardNumber) {
             cardNumber = cardNumber.trim();
             if (OLD_CARD_NUMBER_LENGTH == cardNumber.length()) {
                 cardNumber = contentToNewCardNumber(cardNumber);
             }
-            return validate18(cardNumber);
+            return validateId18(cardNumber);
         }
         return false;
     }
@@ -57,7 +57,7 @@ public class IdCardValidate {
      * @param cardNumber 身份证号
      * @return 是否合规
      */
-    public static boolean validate18(String cardNumber) {
+    public static boolean validateId18(String cardNumber) {
         boolean result;
         if (null == cardNumber) {
             return false;
@@ -138,5 +138,23 @@ public class IdCardValidate {
         buf.append(oldCardNumber.substring(6));
         buf.append(calculateVerifyCode(buf));
         return buf.toString();
+    }
+
+    /**
+     * 校验手机号
+     *
+     * @param phone 手机号
+     * @return 是否符合规则
+     */
+    public static boolean validatePhone(String phone) {
+        phone = phone.trim();
+        String regex = "^((13[0-9])|(17[0-1,6-8])|(15[^4,\\\\D])|(18[0-9]))\\d{8}$";
+        return phone.matches(regex);
+    }
+
+    public static boolean validateEmail(String email) {
+        email = email.trim();
+        String regex = "^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*\\.[a-z]{2,}$";
+        return email.matches(regex);
     }
 }
