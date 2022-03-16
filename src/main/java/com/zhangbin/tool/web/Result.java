@@ -130,4 +130,16 @@ public class Result<T> {
     }
 
 
+    /**
+     * 失败返回信息
+     *
+     * @param code    失败错误码
+     * @param message 失败信息
+     * @return 返回信息 {@link Result}
+     */
+    public static <T> Result<T> error(Integer code, String message) {
+        return new Result<>(code, message, null);
+    }
+
+
 }
