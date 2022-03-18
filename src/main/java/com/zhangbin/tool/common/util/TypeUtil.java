@@ -46,28 +46,28 @@ public class TypeUtil {
             return null;
         }
         if (clazz == int.class) {
-            return "java.lang.Integer";
+            clazz = Integer.class;
         }
         if (clazz == char.class) {
-            return "java.lang.Character";
+            clazz = Character.class;
         }
         if (clazz == byte.class) {
-            return "java.lang.Byte";
+            clazz = Byte.class;
         }
         if (clazz == short.class) {
-            return "java.lang.Short";
+            clazz = Short.class;
         }
         if (clazz == long.class) {
-            return "java.lang.Long";
+            clazz = Long.class;
         }
         if (clazz == double.class) {
-            return "java.lang.Double";
+            clazz = Double.class;
         }
         if (clazz == float.class) {
-            return "java.lang.Float";
+            clazz = Float.class;
         }
         if (clazz == boolean.class) {
-            return "java.lang.Boolean";
+            clazz = Boolean.class;
         }
         return clazz.getTypeName();
     }
