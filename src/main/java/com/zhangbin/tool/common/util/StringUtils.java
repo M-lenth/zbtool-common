@@ -176,4 +176,17 @@ public class StringUtils {
         return underLineToMaxHump(tbName);
     }
 
+    /**
+     * 获取文件去后缀的文件名
+     *
+     * @param filename 文件名
+     * @return 文件名称去后缀的字符串: a.txt => a;  StringUtils.java => StringUtils
+     */
+    public static String getFilename(String filename) {
+        int i = filename.lastIndexOf(".");
+        if (i == -1) {
+            return filename;
+        }
+        return filename.substring(0, i);
+    }
 }

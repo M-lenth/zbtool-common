@@ -1,6 +1,9 @@
 package com.zhangbin.tool.common.filestorage;
 
+import com.zhangbin.tool.common.util.StringUtils;
+
 import java.io.*;
+import java.util.Collections;
 
 /**
  * ClassName: FileUtil <br>
@@ -11,6 +14,13 @@ import java.io.*;
  * @since JDK1.8
  */
 public class FileUtil {
+
+    /**
+     * 文件大小 KB MB
+     */
+    public static final int KB = 1024;
+    public static final int MB = 1024 * KB;
+    public static final int GB = 1024 * MB;
 
     /**
      * 根据java.io.File获取文件内容的字节数组
@@ -177,5 +187,78 @@ public class FileUtil {
             throw new RuntimeException("删除文件[" + file.getName() + "] 失败");
         }
     }
+
+    /**
+     * 分裂文件
+     *
+     * @param source          源文件路径
+     * @param targetDirectory 目标目录路径
+     * @return 分离的文件信息
+     */
+    public static SplitFile split(String source, String targetDirectory) throws IOException {
+        SplitFile splitFile = new SplitFile();
+        File file = new File(source);
+        FileInputStream fis = new FileInputStream(file);
+        byte[] memory = new byte[MB];
+        int index = 0;
+        int len, sum = 0;
+        long length = file.length();
+        File newDirectory = createNewDirectory(targetDirectory);
+        boolean flag = false;
+        while ((len = fis.read(memory)) != -1) {
+            String files = newDirectory.getPath() + File.separator + StringUtils.getFilename(file.getName()) + "_" + ++index;
+            File newFile = createNewFile(files);
+            byte[] tp;
+            if (flag) {
+                int tmp = (int) (length - sum);
+                tp = new byte[tmp];
+                System.arraycopy(memory, 0, tp, 0, tp.length);
+            } else {
+                tp = memory;
+            }
+            try (OutputStream fos = new FileOutputStream(newFile)) {
+                fos.write(tp);
+                fos.flush();
+            }
+            SplitFileInfo fileInfo = new SplitFileInfo();
+            fileInfo.setIndex(index);
+            fileInfo.setFilename(newFile.getPath());
+            splitFile.getInfos().add(fileInfo);
+            sum += len;
+            flag = length - sum < MB;
+        }
+        splitFile.setExt(StringUtils.getStringExtend(file.getName()));
+        splitFile.setFilename(StringUtils.getFilename(file.getName()));
+        splitFile.setPath(file.getPath());
+        return splitFile;
+    }
+
+
+    /**
+     * 合并文件
+     *
+     * @param splitFile 分离的的文件信息 {@link SplitFile}
+     * @return 合并后的文件对象
+     */
+    public static OutputStream merge(SplitFile splitFile) throws IOException {
+        Collections.sort(splitFile.getInfos());
+        // 合并后的文件路径
+        String path = splitFile.getPath() + File.separator + splitFile.getFilename() + "." + splitFile.getExt();
+        // 合并后的文件对象
+        File newFile = FileUtil.createNewFile(path);
+        if (null == newFile) {
+            throw new IOException("文件[ " + path + " ]创建失败");
+        }
+        // 使用字节流读取分离的文件信息
+        try (FileOutputStream fos = new FileOutputStream(newFile);) {
+            for (SplitFileInfo fileInfo : splitFile.getInfos()) {
+                byte[] bytes = FileUtil.getByteArray(new File(fileInfo.getFilename()));
+                fos.write(bytes);
+                fos.flush();
+            }
+        }
+        return new FileOutputStream(newFile);
+    }
+
 
 }
