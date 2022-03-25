@@ -17,14 +17,28 @@ import static com.zhangbin.tool.common.constant.ResultConstant.*;
  */
 public class Result<T> {
 
+    /**
+     * 返回的消息
+     */
     private String message;
+    /**
+     * 返回码
+     */
     private Integer code;
+    /**
+     * 返回的数据
+     */
     private T data;
+    /**
+     * 返回状态是否成功
+     */
+    private boolean success;
 
-    public Result(Integer code, String message, T data) {
+    public Result(Integer code, String message, T data, boolean success) {
         this.code = code;
         this.message = message;
         this.data = data;
+        this.success = success;
     }
 
     public Result() {
@@ -52,6 +66,14 @@ public class Result<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     /**
@@ -90,7 +112,7 @@ public class Result<T> {
      * @return {@link Result}
      */
     public static <T> Result<T> ok(T data) {
-        return new Result<>(SUCCESS, SUCCESS_CN, data);
+        return new Result<>(SUCCESS, SUCCESS_CN, data, true);
     }
 
 
@@ -103,7 +125,7 @@ public class Result<T> {
      * @return {@link Result}
      */
     public static <T> Result<T> ok(Integer code, String message) {
-        return new Result<>(code, message, (T) null);
+        return new Result<>(code, message, (T) null, true);
     }
 
     /**
@@ -116,7 +138,7 @@ public class Result<T> {
      * @return {@link Result}
      */
     public static <T> Result<T> ok(Integer code, String message, T data) {
-        return new Result<>(code, message, data);
+        return new Result<>(code, message, data, true);
     }
 
     /**
@@ -126,7 +148,7 @@ public class Result<T> {
      * @return 返回信息 {@link Result}
      */
     public static <T> Result<T> error(String message) {
-        return new Result<>(ERROR, message, null);
+        return new Result<>(ERROR, message, null, false);
     }
 
 
@@ -138,7 +160,7 @@ public class Result<T> {
      * @return 返回信息 {@link Result}
      */
     public static <T> Result<T> error(Integer code, String message) {
-        return new Result<>(code, message, null);
+        return new Result<>(code, message, null, false);
     }
 
 
