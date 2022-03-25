@@ -1,6 +1,7 @@
 package com.zhangbin.tool.common.util;
 
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 import static com.zhangbin.tool.common.util.CharUtils.isUpper;
 
@@ -188,5 +189,29 @@ public class StringUtils {
             return filename;
         }
         return filename.substring(0, i);
+    }
+
+    /**
+     * 是否符合邮箱规则
+     *
+     * @param email 输入字符串
+     * @return true-是邮箱 false-不是邮箱
+     */
+    public static boolean isEmail(String email) {
+        String regex = "^(\\w+((-\\w+)|(.\\w+)))+\\w+((-\\w+)|(.\\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+)*.[A-Za-z0-9]+$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(email).matches();
+    }
+
+    /**
+     * 判断字符串是否符合电话号码规则
+     *
+     * @param phone 电话字符串
+     * @return true-符合手机号规则 false-不符合
+     */
+    public static boolean isPhone(String phone) {
+        String regex = "^((13[0-9])|(14[0,1,4-9])|(15[0-3,5-9])|(16[2,5,6,7])|(17[0-8])|(18[0-9])|(19[0-3,5-9]))\\d{8}$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(phone).matches();
     }
 }

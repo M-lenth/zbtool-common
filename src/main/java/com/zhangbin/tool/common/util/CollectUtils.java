@@ -10,7 +10,7 @@ import java.util.*;
  * @create 2022/3/18 10:32
  * @since JDK1.8
  */
-public class ListUtil {
+public class CollectUtils {
     /**
      * 可变参数创建ArrayList
      *
