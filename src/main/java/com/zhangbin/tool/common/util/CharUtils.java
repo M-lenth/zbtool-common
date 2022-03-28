@@ -41,4 +41,14 @@ public class CharUtils {
         return isLower(c) || isUpper(c);
     }
 
+    /**
+     * 判断字符是否是数字
+     *
+     * @param c 字符
+     * @return true-是数字 false-不是数字
+     */
+    public static boolean isNum(char c) {
+        return c <= '9' && c >= '0';
+    }
+
 }

@@ -214,4 +214,19 @@ public class StringUtils {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(phone).matches();
     }
+
+    /**
+     * 字符串是否由数字组成
+     *
+     * @param num 字符串
+     * @return true-全是数字 false-有字符
+     */
+    public static boolean isNum(String num) {
+        for (int i = 0; i < num.length(); i++) {
+            if (!CharUtils.isNum(num.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
