@@ -51,4 +51,14 @@ public class CharUtils {
         return c <= '9' && c >= '0';
     }
 
+    /**
+     * 是否特殊字符
+     *
+     * @param c 字符
+     * @return true-是特殊字符 false-不是特殊字符
+     */
+    public static boolean isSpecial(char c) {
+        return !isNum(c) && !isChar(c);
+    }
+
 }

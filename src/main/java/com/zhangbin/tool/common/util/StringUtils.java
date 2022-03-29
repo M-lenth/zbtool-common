@@ -3,7 +3,7 @@ package com.zhangbin.tool.common.util;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
-import static com.zhangbin.tool.common.util.CharUtils.isUpper;
+import static com.zhangbin.tool.common.util.CharUtils.*;
 
 /**
  * Classname: StringUtils <br>
@@ -228,5 +228,47 @@ public class StringUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * 校验密码使用的字符种类 数字 字母 非数字字母字符
+     *
+     * @param pwd  密码字符串
+     * @param kind 种类
+     * @return true-符合该种类规则 false-不符合该规则
+     */
+    public static boolean checkPassword(String pwd, int kind) {
+        // 大写字母
+        boolean charFlag = false;
+        // 小写字母
+        boolean specialFlag = false;
+        // 特殊字符
+        boolean numFlag = false;
+        int count = 0;
+        for (int i = 0; i < pwd.length(); i++) {
+            if (count >= 3) {
+                return true;
+            }
+            if (!charFlag) {
+                if (isChar(pwd.charAt(i))) {
+                    // 大写字母
+                    charFlag = true;
+                    count++;
+                }
+            }
+            if (!specialFlag) {
+                if (isChar(pwd.charAt(i))) {
+                    specialFlag = true;
+                    count++;
+                }
+            }
+            if (!numFlag) {
+                if (!CharUtils.isNum(pwd.charAt(i))) {
+                    numFlag = true;
+                    count++;
+                }
+            }
+        }
+        return count >= kind;
     }
 }
