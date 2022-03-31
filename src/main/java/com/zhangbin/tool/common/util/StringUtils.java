@@ -271,4 +271,18 @@ public class StringUtils {
         }
         return count >= kind;
     }
+
+    /**
+     * 判断两个字符串是否相等
+     *
+     * @param s1 字符串1
+     * @param s2 字符串2
+     * @return true-相同 false-不同
+     */
+    public static boolean equals(String s1, String s2) {
+        if (null == s1 || null == s2) {
+            return false;
+        }
+        return s1.equals(s2);
+    }
 }
