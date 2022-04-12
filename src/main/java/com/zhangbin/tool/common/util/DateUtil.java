@@ -354,7 +354,7 @@ public class DateUtil {
      * @return 月份1 3 5 7 8 10 12月为大月，其余算小月
      */
     public static boolean isLargeMonth(int month) {
-        Set<Integer> sets = CollectUtils.newSets(1, 3, 5, 7, 8, 10, 12);
+        Set<Integer> sets = CollectionUtils.newSets(1, 3, 5, 7, 8, 10, 12);
         return sets.contains(month);
     }
 
