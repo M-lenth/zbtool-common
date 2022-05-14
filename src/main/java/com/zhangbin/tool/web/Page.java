@@ -37,6 +37,8 @@ public class Page<T> {
      */
     private long pages;
 
+    private int pageNum;
+
     public List<T> getList() {
         return list;
     }
@@ -75,5 +77,13 @@ public class Page<T> {
 
     public void setPages(long pages) {
         this.pages = pages;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
     }
 }
