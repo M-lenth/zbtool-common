@@ -115,6 +115,15 @@ public class Result<T> {
         return new Result<>(SUCCESS, SUCCESS_CN, data, true);
     }
 
+    /**
+     * 成功返回值
+     *
+     * @return 只返回成功消息，不返回数据
+     */
+    public static Result<?> ok() {
+        return new Result<>(SUCCESS, SUCCESS_CN, null, true);
+    }
+
 
     /**
      * 成功返回值
