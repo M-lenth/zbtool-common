@@ -1,6 +1,11 @@
 package com.zhangbin.tool.common.util;
 
+import com.zhangbin.tool.common.constant.BracketType;
+
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 import static com.zhangbin.tool.common.util.CharUtils.*;
@@ -284,5 +289,105 @@ public class StringUtils {
             return false;
         }
         return s1.equals(s2);
+    }
+
+    /**
+     * <p> 获取括号内的内容 </p>
+     *
+     * @param str  原字符串
+     * @param type 字符串类型
+     * @return <p> 字符串中括号里面的内容 </p>
+     */
+    public static String[] getBracketContent(String str, BracketType type) {
+        if (isEmpty(str)) {
+            return null;
+        }
+        Character bracketLeft = type.getLeft(), bracketRight = type.getRight();
+        // 匹配括号的栈
+        Stack<Character> st = new Stack<>();
+        // 判断是否为括号内的内容
+        boolean isContent = false;
+        // 构造括号内的字符串内容
+        StringBuilder resultBuilder = new StringBuilder();
+        // 结果列表
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == bracketLeft) {
+                if (!st.isEmpty() && isContent) {
+                    // 添加字符串内容  左括号未清空，认为这一个左括号为字符串内容
+                    resultBuilder.append(str.charAt(i));
+                    continue;
+                }
+                // 左括号，进栈，跳出循环
+                st.push(bracketLeft);
+                isContent = true;
+                continue;
+            }
+            if (str.charAt(i) == bracketRight) {
+                if (st.isEmpty()) {
+                    return null;
+                }
+                // 右括号，出栈，跳出循环
+                isContent = false;
+                // 添加进结果列表
+                result.add(resultBuilder.toString());
+                // 重置builder
+                resultBuilder.setLength(0);
+                st.pop();
+            }
+            if (isContent) {
+                // 添加字符串内容
+                resultBuilder.append(str.charAt(i));
+            }
+        }
+        return result.toArray(new String[0]);
+    }
+
+    /**
+     * <p> 替换字符串中的括号 </p>
+     *
+     * @param str     原字符串
+     * @param type    括号类型
+     * @param strings 目标数组
+     * @return 替换后的字符串
+     */
+    private static String replaceBracket(String str, BracketType type, String[] strings) {
+        for (String string : strings) {
+            str = str.replaceFirst("\\{}", string);
+        }
+        return str;
+    }
+
+    /**
+     * <p> 替换字符串中的花括号为目标字符串<code>strings</code> </p>
+     *
+     * @param str     原字符串
+     * @param strings 替换的目标数组
+     * @return 替换花括号后的字符串
+     */
+    public static String replaceBracketBrace(String str, String... strings) {
+        return replaceBracket(str, BracketType.BRACE, strings);
+    }
+
+    /**
+     * <p> 替换字符串中的中括号括号为目标字符串<code>strings</code> </p>
+     *
+     * @param str     原字符串
+     * @param strings 替换的目标数组
+     * @return 替换中括号后的字符串
+     */
+    public static String replaceBracketSquare(String str, String... strings) {
+        return replaceBracket(str, BracketType.SQUARE_BRACKETS, strings);
+    }
+
+    /**
+     * <p> 替换字符串中的小括号为目标字符串<code>strings</code> </p>
+     *
+     * @param str     原字符串
+     * @param strings 替换的目标数组
+     * @return 替换魈括号后的字符串
+     */
+    public static String replaceBracketRound(String str, String... strings) {
+        return replaceBracket(str, BracketType.ROUND_BRACKETS, strings);
     }
 }
