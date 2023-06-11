@@ -1,7 +1,7 @@
 package com.zhangbin.tool.io;
 
 import com.zhangbin.tool.common.constant.DateConstant;
-import com.zhangbin.tool.common.filestorage.FileUtil;
+import com.zhangbin.tool.common.util.FileUtil;
 import com.zhangbin.tool.common.util.DateUtil;
 import com.zhangbin.tool.common.util.StringUtils;
 import com.zhangbin.tool.common.util.TypeUtil;
