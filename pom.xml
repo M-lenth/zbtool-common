@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zhangbin</groupId>
-    <artifactId>zbtool-common</artifactId>
+    <artifactId>zbtool-mybatis</artifactId>
     <version>1.0.1-db</version>
     <description>关于Mybatis的工具分支</description>
 
@@ -24,6 +24,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.zhangbin</groupId>
+            <artifactId>zbtool-common</artifactId>
+            <version>1.0.2</version>
+        </dependency>
         <!-- FastJSON -->
         <dependency>
             <groupId>com.alibaba</groupId>
