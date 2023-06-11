@@ -1,6 +1,8 @@
-package com.zhangbin.tool.common.filestorage;
+package com.zhangbin.tool.common.util;
 
-import com.zhangbin.tool.common.util.StringUtils;
+import com.zhangbin.tool.common.filestorage.FastDfsFile;
+import com.zhangbin.tool.common.filestorage.SplitFile;
+import com.zhangbin.tool.common.filestorage.SplitFileInfo;
 
 import java.io.*;
 import java.util.Collections;
@@ -146,6 +148,19 @@ public class FileUtil {
     }
 
     /**
+     * <p> 将字节数据写入文件中 </p>
+     *
+     * @param file    目标文件
+     * @param content 数据内容
+     */
+    public static void write(File file, byte[] content) throws IOException {
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(content);
+        fos.flush();
+        fos.close();
+    }
+
+    /**
      * 向文件中追加字符串数据
      *
      * @param file    文件
@@ -258,6 +273,67 @@ public class FileUtil {
             }
         }
         return new FileOutputStream(newFile);
+    }
+
+    /**
+     * <p> 复制文件 </p>
+     *
+     * @param src    源文件
+     * @param target 目标文件
+     * @return 是否成功<p> true-成功 false-失败 </p>
+     */
+    public static boolean copy(File src, File target) throws IOException {
+        byte[] content = getByteArray(src);
+        write(target, content);
+        return true;
+    }
+
+    /**
+     * <p> 复制文件 </p>
+     *
+     * @param src    原路径
+     * @param target 目标路径
+     * @return 是否复制成功
+     */
+    public static boolean copy(String src, String target) throws IOException {
+        File srcFile = new File(src);
+        File targetFile = new File(target);
+        if (!srcFile.exists()) {
+            return false;
+        }
+        if (targetFile.exists()) {
+            return false;
+        } else {
+            targetFile.createNewFile();
+        }
+        return copy(srcFile, targetFile);
+    }
+
+    /**
+     * <p> 移动文件 </p>
+     *
+     * @param src    源文件
+     * @param target 目标文件
+     * @return 是否移动成功
+     */
+    public static boolean move(File src, File target) {
+        return src.renameTo(target);
+    }
+
+    /**
+     * <p> 移动文件 </p>
+     *
+     * @param src    原路径
+     * @param target 目标路径
+     * @return 是否移动成功
+     */
+    public static boolean move(String src, String target) {
+        File srcFile = new File(src);
+        File targetFile = new File(target);
+        if (!srcFile.exists()) {
+            return false;
+        }
+        return move(srcFile, targetFile);
     }
 
 
