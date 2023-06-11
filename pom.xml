@@ -20,7 +20,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <fastjson.version>2.0.32</fastjson.version>
         <mybatis.version>3.4.5</mybatis.version>
-        <log4j.version>1.2.12</log4j.version>
     </properties>
 
     <dependencies>
@@ -29,21 +28,10 @@
             <artifactId>zbtool-common</artifactId>
             <version>1.0.2</version>
         </dependency>
-        <!-- FastJSON -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>${mybatis.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 
