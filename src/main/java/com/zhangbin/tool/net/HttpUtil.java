@@ -1,6 +1,6 @@
 package com.zhangbin.tool.net;
 
-import com.zhangbin.tool.common.util.StringUtils;
+import pers.zhangbin.tool.common.util.StringUtils;
 import com.zhangbin.tool.net.enumeration.HttpMethod;
 import okhttp3.*;
 

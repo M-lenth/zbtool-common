@@ -1,10 +1,10 @@
 package com.zhangbin.tool.net;
 
 import com.alibaba.fastjson.JSON;
-import com.zhangbin.tool.common.util.StringUtils;
+import pers.zhangbin.tool.common.util.StringUtils;
 import com.zhangbin.tool.net.enumeration.HttpMethod;
 import com.zhangbin.tool.net.function.RequestInvoke;
-import com.zhangbin.tool.web.Result;
+import pers.zhangbin.tool.web.Result;
 
 import java.io.IOException;
 
