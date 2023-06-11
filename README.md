@@ -14,19 +14,23 @@ zbtool-common，用于Java开发使用的一个工具类内容。其中包含以
 
 #### 安装教程
 
-添加远程仓库地址
-
-```
-http://120.24.205.42:8081/nexus/content/groups/public/
-```
-
 添加依赖
 
 ```xml
 <dependency>
     <groupId>com.zhangbin</groupId>
     <artifactId>zbtool-common</artifactId>
-    <version>1.0</version>
+    <version>1.0.2</version>
+</dependency>
+```
+
+需要OKHTTP则添加依赖：
+
+```xml
+<dependency>
+    <groupId>com.zhangbin</groupId>
+    <artifactId>zbtool-net</artifactId>
+    <version>1.0.0-net</version>
 </dependency>
 ```
 
@@ -143,19 +147,6 @@ DELETE:
 executeDeleteSync(String url, REQ body);
 executeDeleteAsync(String url, REQ body)
 ```
-
-##### web
-
-面向JavaWeb开发，封装Web开发常用的一些类
-
-- Result类，规定统一返回数据类型，从系统返回的数据类型使用此类封装，并自定义返回代码以及返回信息
-
-提供方法:
-
-parse将data从JSONObject转换为对象
-
-parseList将data从JSONArray转换为List列表
-
 
 
 
