@@ -1,8 +1,8 @@
-package com.zhangbin.tool.mybatis;
+package pers.zhangbin.tool.mybatis;
 
-import com.zhangbin.tool.io.Resource;
-import com.zhangbin.tool.mybatis.bean.DataBaseConfigBean;
-import com.zhangbin.tool.mybatis.mapper.BaseMapper;
+import pers.zhangbin.tool.io.Resource;
+import pers.zhangbin.tool.mybatis.bean.DataBaseConfigBean;
+import pers.zhangbin.tool.mybatis.mapper.BaseMapper;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;

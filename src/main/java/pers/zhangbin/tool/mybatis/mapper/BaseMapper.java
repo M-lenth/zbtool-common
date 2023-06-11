@@ -1,4 +1,4 @@
-package com.zhangbin.tool.mybatis.mapper;
+package pers.zhangbin.tool.mybatis.mapper;
 
 /**
  * ClassName: BaseMapper <br>

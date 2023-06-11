@@ -1,4 +1,4 @@
-package com.zhangbin.tool.mybatis.bean;
+package pers.zhangbin.tool.mybatis.bean;
 
 /**
  * ClassName: Table <br>

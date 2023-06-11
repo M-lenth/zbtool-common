@@ -1,6 +1,6 @@
-package com.zhangbin.tool.mybatis.mapper;
+package pers.zhangbin.tool.mybatis.mapper;
 
-import com.zhangbin.tool.mybatis.bean.Table;
+import pers.zhangbin.tool.mybatis.bean.Table;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;

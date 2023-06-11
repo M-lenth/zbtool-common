@@ -1,4 +1,4 @@
-package com.zhangbin.tool.mybatis;
+package pers.zhangbin.tool.mybatis;
 
 import java.util.Date;
 

@@ -1,6 +1,6 @@
-package com.zhangbin.tool.mybatis.bean;
+package pers.zhangbin.tool.mybatis.bean;
 
-import com.zhangbin.tool.mybatis.mapper.TableMapper;
+import pers.zhangbin.tool.mybatis.mapper.TableMapper;
 
 import java.util.ArrayList;
 import java.util.List;
