@@ -1,4 +1,4 @@
-package com.zhangbin.tool.net.enumeration;
+package pers.zhangbin.tool.net.enumeration;
 
 /**
  * Classname: HttpMethodEnum <br>

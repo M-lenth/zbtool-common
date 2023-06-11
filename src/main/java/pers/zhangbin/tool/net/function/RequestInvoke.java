@@ -1,7 +1,7 @@
-package com.zhangbin.tool.net.function;
+package pers.zhangbin.tool.net.function;
 
-import com.zhangbin.tool.net.HttpRequest;
-import com.zhangbin.tool.net.HttpResponse;
+import pers.zhangbin.tool.net.HttpRequest;
+import pers.zhangbin.tool.net.HttpResponse;
 
 import java.io.IOException;
 

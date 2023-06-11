@@ -1,9 +1,9 @@
-package com.zhangbin.tool.net;
+package pers.zhangbin.tool.net;
 
 import com.alibaba.fastjson.JSON;
 import pers.zhangbin.tool.common.util.StringUtils;
-import com.zhangbin.tool.net.enumeration.HttpMethod;
-import com.zhangbin.tool.net.function.RequestInvoke;
+import pers.zhangbin.tool.net.enumeration.HttpMethod;
+import pers.zhangbin.tool.net.function.RequestInvoke;
 import pers.zhangbin.tool.web.Result;
 
 import java.io.IOException;

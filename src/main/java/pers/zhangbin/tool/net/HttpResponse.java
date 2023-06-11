@@ -1,4 +1,4 @@
-package com.zhangbin.tool.net;
+package pers.zhangbin.tool.net;
 
 /**
  * Classname: HttpResponse <br>

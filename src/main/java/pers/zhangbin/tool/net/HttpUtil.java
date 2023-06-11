@@ -1,7 +1,7 @@
-package com.zhangbin.tool.net;
+package pers.zhangbin.tool.net;
 
 import pers.zhangbin.tool.common.util.StringUtils;
-import com.zhangbin.tool.net.enumeration.HttpMethod;
+import pers.zhangbin.tool.net.enumeration.HttpMethod;
 import okhttp3.*;
 
 import java.io.IOException;

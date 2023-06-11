@@ -1,6 +1,6 @@
-package com.zhangbin.tool.net;
+package pers.zhangbin.tool.net;
 
-import com.zhangbin.tool.net.enumeration.HttpMethod;
+import pers.zhangbin.tool.net.enumeration.HttpMethod;
 
 /**
  * Classname: HttpRequestEntity <br>
