@@ -365,9 +365,10 @@ public class StringUtils {
      * @param strings 替换的目标数组
      * @return 替换花括号后的字符串
      */
-    public static String replaceBracketBrace(String str, String... strings) {
-        return replaceBracket(str, BracketType.BRACE, strings);
+    public static String replaceBracketBrace(String str, Object... strings) {
+        return replaceBracket(str, BracketType.BRACE, getStringArr(strings));
     }
+
 
     /**
      * <p> 替换字符串中的中括号括号为目标字符串<code>strings</code> </p>
@@ -376,8 +377,8 @@ public class StringUtils {
      * @param strings 替换的目标数组
      * @return 替换中括号后的字符串
      */
-    public static String replaceBracketSquare(String str, String... strings) {
-        return replaceBracket(str, BracketType.SQUARE_BRACKETS, strings);
+    public static String replaceBracketSquare(String str, Object... strings) {
+        return replaceBracket(str, BracketType.SQUARE_BRACKETS, getStringArr(strings));
     }
 
     /**
@@ -387,7 +388,21 @@ public class StringUtils {
      * @param strings 替换的目标数组
      * @return 替换魈括号后的字符串
      */
-    public static String replaceBracketRound(String str, String... strings) {
-        return replaceBracket(str, BracketType.ROUND_BRACKETS, strings);
+    public static String replaceBracketRound(String str, Object... strings) {
+        return replaceBracket(str, BracketType.ROUND_BRACKETS, getStringArr(strings));
+    }
+
+    /**
+     * <p> 将Object数组转换为String数组 </p>
+     *
+     * @param objects Object数组
+     * @return String数组
+     */
+    private static String[] getStringArr(Object[] objects) {
+        List<String> list = new ArrayList<>();
+        for (Object o : objects) {
+            list.add(String.valueOf(o));
+        }
+        return list.toArray(new String[0]);
     }
 }
