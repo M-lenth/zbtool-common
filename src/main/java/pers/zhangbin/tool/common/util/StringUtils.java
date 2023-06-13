@@ -2,6 +2,10 @@ package pers.zhangbin.tool.common.util;
 
 import pers.zhangbin.tool.common.constant.BracketType;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -404,5 +408,25 @@ public class StringUtils {
             list.add(String.valueOf(o));
         }
         return list.toArray(new String[0]);
+    }
+
+    /**
+     * <p> 根据输入流获取字符串 </p>
+     *
+     * @param is      输入流
+     * @param charset 二进制转换的编码格式
+     * @return 二进制转换的字符串
+     */
+    public static String getStringByInStream(InputStream is, Charset charset) throws IOException {
+        if (null == is) {
+            throw new RuntimeException("InputStream is null,");
+        }
+        byte[] buf = new byte[100];
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        int n;
+        while ((n = is.read(buf)) != -1) {
+            bos.write(buf, 0, n);
+        }
+        return new String(bos.toByteArray(), charset);
     }
 }
