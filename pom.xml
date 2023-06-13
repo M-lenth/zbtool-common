@@ -6,7 +6,7 @@
 
     <groupId>pers.zhangbin</groupId>
     <artifactId>zbtool-net</artifactId>
-    <version>1.0.0-net</version>
+    <version>1.0.1-net</version>
     <description>自写的工具类包，此版本新增集成Okhttp</description>
 
     <properties>

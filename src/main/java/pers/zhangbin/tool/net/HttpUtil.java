@@ -1,10 +1,13 @@
 package pers.zhangbin.tool.net;
 
 import pers.zhangbin.tool.common.util.StringUtils;
+import pers.zhangbin.tool.io.Resource;
 import pers.zhangbin.tool.net.enumeration.HttpMethod;
 import okhttp3.*;
+import pers.zhangbin.tool.net.util.SSLSocketClient;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Classname: HttpUtil <br>
@@ -21,12 +24,12 @@ public class HttpUtil {
      * @param request 请求信息
      * @return 响应信息
      */
-    protected static HttpResponse sendAsync(HttpRequest request) {
+    protected static HttpResponse sendAsync(HttpRequest request) throws IOException {
         checkRequest(request);
         // 响应信息
         final HttpResponse resp = new HttpResponse();
         // 构建OKhttp对象
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getClient(request);
         // 获取访问请求对象
         Request req = getRequest(request);
         // 访问网络
@@ -56,7 +59,7 @@ public class HttpUtil {
         // 响应信息
         final HttpResponse resp = new HttpResponse();
         // 构建OKhttp对象
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getClient(request);
         // 获取访问请求对象
         Request req = getRequest(request);
         // 访问网络
@@ -72,14 +75,11 @@ public class HttpUtil {
      * @param request 请求信息
      * @return 响应信息 data为byte[]
      */
-    protected static HttpResponse downloadAsync(HttpRequest request) {
+    protected static HttpResponse downloadAsync(HttpRequest request) throws IOException {
         checkRequest(request);
         final HttpResponse resp = new HttpResponse();
-        OkHttpClient client = new OkHttpClient();
-        Request req = new Request.Builder()
-            .url(request.getUrl())
-            .get()
-            .build();
+        OkHttpClient client = getClient(request);
+        Request req = new Request.Builder().url(request.getUrl()).get().build();
         client.newCall(req).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -104,11 +104,8 @@ public class HttpUtil {
     protected static HttpResponse downloadSync(HttpRequest request) throws IOException {
         checkRequest(request);
         final HttpResponse resp = new HttpResponse();
-        OkHttpClient client = new OkHttpClient();
-        Request req = new Request.Builder()
-            .url(request.getUrl())
-            .get()
-            .build();
+        OkHttpClient client = getClient(request);
+        Request req = new Request.Builder().url(request.getUrl()).get().build();
         Response response = client.newCall(req).execute();
         resp.setData(response.body().bytes());
         return resp;
@@ -120,7 +117,7 @@ public class HttpUtil {
      * @param request 上传信息
      * @return 响应信息
      */
-    protected static HttpResponse upload(HttpRequest request) {
+    protected static HttpResponse upload(HttpRequest request) throws IOException {
         checkRequest(request);
         // 访问文件类型
         MediaType mediaTypeJson = MediaType.parse("application/json; charset=utf-8");
@@ -128,11 +125,8 @@ public class HttpUtil {
         RequestBody body = RequestBody.create(mediaTypeJson, request.getBody());
         // 响应信息
         final HttpResponse resp = new HttpResponse();
-        OkHttpClient client = new OkHttpClient();
-        Request req = new Request.Builder()
-            .url(request.getUrl())
-            .post(body)
-            .build();
+        OkHttpClient client = getClient(request);
+        Request req = new Request.Builder().url(request.getUrl()).post(body).build();
         client.newCall(req).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -192,9 +186,7 @@ public class HttpUtil {
      * @return 真实访问路径
      */
     public static String getRestFulUrl(String ip, int port, String url) {
-        HttpUrl.Builder builder = new HttpUrl.Builder().scheme("http")
-            .host(ip)
-            .port(port);
+        HttpUrl.Builder builder = new HttpUrl.Builder().scheme("http").host(ip).port(port);
         String[] params = getRestFulParam(url);
         for (String param : params) {
             builder.addPathSegment(param);
@@ -216,5 +208,15 @@ public class HttpUtil {
         return url.split("/");
     }
 
+    public static OkHttpClient getClient(HttpRequest request) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        if (request.isHttps()) {
+            client.newBuilder()
+                    .sslSocketFactory(Objects.requireNonNull(SSLSocketClient.getSSlSocketFactory(request.getCertificate())))
+                    .hostnameVerifier(SSLSocketClient.getHostnameVerifier())
+                    .build();
+        }
+        return client;
+    }
 
 }

@@ -2,6 +2,8 @@ package pers.zhangbin.tool.net;
 
 import pers.zhangbin.tool.net.enumeration.HttpMethod;
 
+import java.io.InputStream;
+
 /**
  * Classname: HttpRequestEntity <br>
  * Description: <p> Http请求实体 </p>  <br>
@@ -24,6 +26,14 @@ public class HttpRequest {
      * 请求内容, JSON格式
      */
     private String body = "";
+    /**
+     * 是否https
+     */
+    private boolean isHttps = false;
+    /**
+     * 证书内容流
+     */
+    private InputStream certificate;
 
     private HttpRequest() {
     }
@@ -50,6 +60,22 @@ public class HttpRequest {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public boolean isHttps() {
+        return isHttps;
+    }
+
+    public void setHttps(boolean https) {
+        isHttps = https;
+    }
+
+    public InputStream getCertificate() {
+        return certificate;
+    }
+
+    public void setCertificate(InputStream certificate) {
+        this.certificate = certificate;
     }
 
     public static class Builder {
@@ -89,6 +115,16 @@ public class HttpRequest {
 
         public Builder delete() {
             this.request.method = HttpMethod.DELETE;
+            return this;
+        }
+
+        public Builder isHttps(boolean isHttps) {
+            this.request.isHttps = isHttps;
+            return this;
+        }
+
+        public Builder certificate(InputStream certificate) {
+            this.request.certificate = certificate;
             return this;
         }
 
