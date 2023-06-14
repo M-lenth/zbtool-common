@@ -7,6 +7,10 @@ zbtool-common，用于Java开发使用的一个工具类内容。其中包含以
 1. common
 2. net
 
+工具类使用文档：
+
+[<font face='楷体'>查看文档</font>](http://120.24.205.42/zbtool/doc/index.html)
+
 #### 安装教程
 
 下载项目
