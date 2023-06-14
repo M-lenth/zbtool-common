@@ -1,11 +1,10 @@
 package pers.zhangbin.tool;
 
-import pers.zhangbin.tool.common.util.StringUtils;
+import com.alibaba.fastjson.JSON;
 import pers.zhangbin.tool.io.Resource;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import pers.zhangbin.tool.net.HttpRequest;
+import pers.zhangbin.tool.net.HttpResponse;
+import pers.zhangbin.tool.net.HttpUtils;
 
 /**
  * ClassName: ToolTest <br>
@@ -17,9 +16,18 @@ import java.nio.charset.StandardCharsets;
  */
 public class ToolTest {
 
-    public static void main(String[] args) throws IOException {
-        InputStream is = new Resource("tst.txt").getResourceAsInputStream();
-        String string = StringUtils.getStringByInStream(is, StandardCharsets.UTF_8);
-        System.out.println(string);
+    public static void main(String[] args) throws Exception {
+//        InputStream is = new Resource("tst.txt").getResourceAsInputStream();
+//        String string = StringUtils.getStringByInStream(is, StandardCharsets.UTF_8);
+//        System.out.println(string);
+//        HttpResponse https = HttpUtils.executeGetHttpsNotSSL(url);
+//        System.out.println(response.getData());
+//        HttpResponse http = HttpUtils.executeGetHttp("http://localhost:8080/test/post_obj");
+//        HttpRequest request = new HttpRequest.Builder().post(JSON.toJSONString(test)).url("http://localhost:8080/test/post_obj").build();
+//        HttpRequest request = new HttpRequest.Builder().put(JSON.toJSONString(test)).url("http://localhost:8080/test/put_obj").build();
+//        HttpRequest request = new HttpRequest.Builder().delete(JSON.toJSONString(test)).url("http://localhost:8080/test/delete_obj").build();
+//
+//        HttpResponse response = HttpUtils.executeHttp(request);
+//        System.out.println(JSON.toJSONString(response));
     }
 }
