@@ -1,17 +1,19 @@
 package pers.zhangbin.tool.net;
 
-
 import pers.zhangbin.tool.common.util.StringUtils;
 import pers.zhangbin.tool.net.util.SSLSocketClient;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.TrustManager;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
- * ClassName: HttpClient <br>
- * Description: <p>  </p>  <br>
+ * ClassName: HttpUtils <br>
+ * Description: <p> 执行Http与Https相关的方法 </p>  <br>
  *
  * @author zhangbin
  * @create 2022/2/11 16:19
@@ -36,40 +38,95 @@ public class HttpUtils {
     private static final Integer HTTP_CODE_GATEWAY_TIMEOUT = 504;
 
     /**
-     * <p> 通过Get方式访问https链接获取数据 </p>
+     * <p> 执行Http请求 </p>
      *
-     * @param url    访问地址
-     * @param stream SSL证书流
-     * @return 响应体数据
+     * @param request 请求对象
+     * @return 请求结果
      */
-    public static HttpResponse executeGetHttps(String url, InputStream stream) throws IOException {
-        HttpResponse response = new HttpResponse();
-        HttpsURLConnection connection = getConnection(url, stream, "GET");
-        connection.connect();
-        if (connection.getResponseCode() == HTTP_CODE_SUCCESS) {
-            response.setData(getResponseData(connection));
+    public static HttpResponse executeHttp(HttpRequest request) throws IOException {
+        HttpURLConnection conn = getHttpConnection(request);
+        conn.connect();
+        HttpResponse response = null;
+        if (conn.getResponseCode() == HTTP_CODE_SUCCESS) {
+            response = HttpResponse.success();
+            response.setData(getResponseData(conn));
         } else {
-            response.setError(StringUtils.getStringByInStream(connection.getErrorStream(), StandardCharsets.UTF_8));
+            response = HttpResponse.error(StringUtils.getStringByInStream(conn.getErrorStream(), StandardCharsets.UTF_8));
         }
         return response;
     }
 
     /**
-     * <p> 通过Get方式访问http链接获取数据 </p>
+     * <p> 使用SSL证书访问HTTPS网址 </p>
      *
-     * @param url 访问地址
-     * @return 响应体数据
+     * @param request 请求对象
+     * @param stream  证书流
+     * @return 请求结果对象
      */
-    public static HttpResponse executeGetHttp(String url) throws IOException {
-        HttpResponse response = new HttpResponse();
-        HttpURLConnection connection = getConnection(url, "GET");
-        connection.connect();
-        if (connection.getResponseCode() == HTTP_CODE_SUCCESS) {
-            response.setData(getResponseData(connection));
+    public static HttpResponse executeHttps(HttpRequest request, InputStream stream) throws IOException {
+        HttpURLConnection conn = getConnection(request.getUrl(), stream, request.getMethod().getName());
+        conn.connect();
+        HttpResponse response = null;
+        if (conn.getResponseCode() == HTTP_CODE_SUCCESS) {
+            response = HttpResponse.success();
+            response.setData(getResponseData(conn));
         } else {
-            response.setError(StringUtils.getStringByInStream(connection.getErrorStream(), StandardCharsets.UTF_8));
+            response = HttpResponse.error(StringUtils.getStringByInStream(conn.getErrorStream(), StandardCharsets.UTF_8));
         }
         return response;
+    }
+
+    /**
+     * <p> 访问HTTPS网址，绕过SSL检测 </p>
+     *
+     * @param request 访问请求对象
+     * @return 访问返回结果数据对象
+     */
+    public static HttpResponse executeHttps(HttpRequest request) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        URL url = new URL(request.getUrl());
+        trustAllHttpsCertificates();
+        HttpsURLConnection.setDefaultHostnameVerifier(SSLSocketClient.getHostnameVerifier());
+//        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        HttpsURLConnection conn = getHttpsConnection(request);
+
+        conn.setRequestMethod(request.getMethod().getName());
+        conn.setConnectTimeout(CONNECTION_TIMEOUT);
+        conn.setReadTimeout(READ_TIMEOUT);
+        HttpResponse response = new HttpResponse();
+        if (conn.getResponseCode() == HTTP_CODE_SUCCESS) {
+            response = HttpResponse.success();
+            response.setData(getResponseData(conn));
+        } else {
+            response = HttpResponse.error(StringUtils.getStringByInStream(conn.getErrorStream(), StandardCharsets.UTF_8));
+        }
+        return response;
+    }
+
+    /**
+     * 信任所有证书
+     */
+    private static void trustAllHttpsCertificates() throws NoSuchAlgorithmException, KeyManagementException {
+        TrustManager[] trustAllCerts = new javax.net.ssl.TrustManager[1];
+        TrustManager tm = new miTM();
+        trustAllCerts[0] = tm;
+        javax.net.ssl.SSLContext sc = javax.net.ssl.SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, null);
+        javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+    }
+
+    private static class miTM implements javax.net.ssl.TrustManager, javax.net.ssl.X509TrustManager {
+        @Override
+        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+
+        @Override
+        public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+        }
+
+        @Override
+        public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+        }
     }
 
     /**
@@ -109,15 +166,57 @@ public class HttpUtils {
     /**
      * <p> 获取HTTP方式的连接对象 </p>
      *
-     * @param url 访问地址
+     * @param request 访问地址信息、访问的请求参数、访问方式等封装而成的对象
      * @return HTTP连接对象
      */
-    private static HttpURLConnection getConnection(String url, String method) throws IOException {
-        URL u = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) u.openConnection();
-        connection.setRequestMethod(method);
-        connection.setConnectTimeout(15000);
-        connection.setReadTimeout(60000);
-        return connection;
+    private static HttpURLConnection getHttpConnection(HttpRequest request) throws IOException {
+        URL u = new URL(request.getUrl());
+        HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+        setConnection(conn, request);
+        return conn;
+    }
+
+    /**
+     * <p> 获取HTTPS方式的连接对象 </p>
+     * @param request 请求信息
+     * @return HTTPS连接对象
+     */
+    private static HttpsURLConnection getHttpsConnection(HttpRequest request) throws IOException {
+        URL u = new URL(request.getUrl());
+        HttpsURLConnection conn = (HttpsURLConnection) u.openConnection();
+        setConnection(conn, request);
+        return conn;
+    }
+
+    /**
+     * <p> 设置Connection的信息 </p>
+     * @param conn 连接对象
+     * @param request 访问信息
+     */
+    private static void setConnection(HttpURLConnection conn, HttpRequest request) throws IOException {
+        conn.setRequestMethod(request.getMethod().getName());
+        conn.setConnectTimeout(15000);
+        conn.setReadTimeout(60000);
+        switch (request.getMethod()) {
+            case GET:
+                break;
+            case POST:
+            case PUT:
+            case DELETE:
+                // 设置头部信息
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("Charset", "UTF-8");
+                // 设置访问数据
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                OutputStream os = conn.getOutputStream();
+                os.write(request.getBody().getBytes(StandardCharsets.UTF_8));
+                os.flush();
+                os.close();
+                break;
+            default:
+                throw new RuntimeException("method is not allowed");
+        }
     }
 }

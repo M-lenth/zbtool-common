@@ -18,14 +18,20 @@ public class SSLSocketClient {
 
     //获取HostnameVerifier
     public static HostnameVerifier getHostnameVerifier() {
-        return (s, sslSession) -> true;
+        return (s, sslSession) -> {
+            System.out.println("Warning: URL Host: " + s + " vs. " + sslSession.getPeerHost());
+            return false;
+        };
+
     }
 
     public static SSLSocketFactory getSSlSocketFactory(InputStream certificates) {
+        if (null == certificates) {
+            return null;
+        }
         SSLContext sslContext = null;
         try {
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-
             Certificate ca;
             try {
                 ca = certificateFactory.generateCertificate(certificates);
@@ -33,26 +39,21 @@ public class SSLSocketClient {
             } finally {
                 certificates.close();
             }
-
             // Create a KeyStore containing our trusted CAs
             String keyStoreType = KeyStore.getDefaultType();
             KeyStore keyStore = KeyStore.getInstance(keyStoreType);
             keyStore.load(null, null);
             keyStore.setCertificateEntry("ca", ca);
-
             // Create a TrustManager that trusts the CAs in our KeyStore
             String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
             tmf.init(keyStore);
-
             // Create an SSLContext that uses our TrustManager
             sslContext = SSLContext.getInstance("SSL");
             sslContext.init(null, tmf.getTrustManagers(), null);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return sslContext != null ? sslContext.getSocketFactory() : null;
     }
 

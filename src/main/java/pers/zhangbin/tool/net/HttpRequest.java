@@ -2,10 +2,8 @@ package pers.zhangbin.tool.net;
 
 import pers.zhangbin.tool.net.enumeration.HttpMethod;
 
-import java.io.InputStream;
-
 /**
- * Classname: HttpRequestEntity <br>
+ * Classname: HttpRequest <br>
  * Description: <p> Http请求实体 </p>  <br>
  *
  * @author zhangbin
@@ -54,6 +52,15 @@ public class HttpRequest {
         this.body = body;
     }
 
+    /**
+     * 创建一个构造器对象
+     *
+     * @return 构造器对象
+     */
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public static class Builder {
         private final HttpRequest request = new HttpRequest();
 
@@ -94,6 +101,10 @@ public class HttpRequest {
             return this;
         }
 
+        public Builder method(HttpMethod method) {
+            this.request.method = method;
+            return this;
+        }
 
         public HttpRequest build() {
             return this.request;
