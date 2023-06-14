@@ -27,14 +27,31 @@ public class Resource {
         return path;
     }
 
+    /**
+     * <p> 获取资源文件的内容，以Reader形式返回 </p>
+     *
+     * @return 文件字符Reader流
+     * @see java.io.Reader
+     */
     public Reader getResourceAsReader() throws FileNotFoundException {
         return new FileReader(file);
     }
 
+    /**
+     * <p> 获取资源文件内容，以字节流InputStream形式返回 </p>
+     *
+     * @return 文件字节流
+     * @see java.io.InputStream
+     */
     public InputStream getResourceAsInputStream() throws FileNotFoundException {
         return new FileInputStream(file);
     }
 
+    /**
+     * <p> 获取绝对路径 </p>
+     *
+     * @return 文件绝对路径
+     */
     public String getAbsolutePath() {
         return this.file.getPath();
     }
