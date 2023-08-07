@@ -13,7 +13,7 @@ import java.util.Map;
  * @create 2022/3/9 11:52
  * @since JDK1.8
  */
-public class WebUtil {
+public class WebUtils {
 
     private static final Map<String, List<HeaderConfig>> DIC = new HashMap<>();
 

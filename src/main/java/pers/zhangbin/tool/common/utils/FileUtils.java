@@ -15,7 +15,7 @@ import java.util.Collections;
  * @create 2021/12/17 16:42
  * @since JDK1.8
  */
-public class FileUtil {
+public class FileUtils {
 
     /**
      * 文件大小 KB MB
@@ -260,14 +260,14 @@ public class FileUtil {
         // 合并后的文件路径
         String path = splitFile.getPath() + File.separator + splitFile.getFilename() + "." + splitFile.getExt();
         // 合并后的文件对象
-        File newFile = FileUtil.createNewFile(path);
+        File newFile = FileUtils.createNewFile(path);
         if (null == newFile) {
             throw new IOException("文件[ " + path + " ]创建失败");
         }
         // 使用字节流读取分离的文件信息
         try (FileOutputStream fos = new FileOutputStream(newFile);) {
             for (SplitFileInfo fileInfo : splitFile.getInfos()) {
-                byte[] bytes = FileUtil.getByteArray(new File(fileInfo.getFilename()));
+                byte[] bytes = FileUtils.getByteArray(new File(fileInfo.getFilename()));
                 fos.write(bytes);
                 fos.flush();
             }

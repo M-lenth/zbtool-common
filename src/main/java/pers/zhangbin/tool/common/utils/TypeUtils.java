@@ -8,7 +8,7 @@ package pers.zhangbin.tool.common.utils;
  * @create 2022/3/11 11:26
  * @since JDK1.8
  */
-public class TypeUtil {
+public class TypeUtils {
 
     public static String getTypeString(Class<?> clazz) {
         if (null == clazz) {
