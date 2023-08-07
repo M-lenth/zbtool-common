@@ -9,30 +9,19 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 
 /**
- * ClassName: JwtUtil <br>
- * Description: <p> 生成解析JWT的工具类 </p>  <br>
+ * ClassName: <p> JwtUtils  </p>
+ * CreateTime: 2023/8/7 21:59
+ * Description: <p> 生成解析JWT的工具类  </p>
  *
- * @author zhangbin
- * @create 2022/2/10 14:12
- * @since JDK1.8
  */
 public class JwtUtils {
-
     /**
      * JWT默认有效期1h
      */
     private static final Long JWT_TTL = 3600000L;
-    /**
-     * 生成JWT需要的Key
-     */
-    private final String JWT_KEY;
-
-    public JwtUtils(String jwtKey) {
-        JWT_KEY = jwtKey;
-    }
-
 
     /**
      * 生成令牌
@@ -41,9 +30,11 @@ public class JwtUtils {
      * @param subject JWT主题
      * @param issuer  签发人
      * @param ttMills 有效时间
+     * @param claims  Token中携带的数据
+     * @param jwtKey  jks证书
      * @return JWT字符串
      */
-    public String createJwt(String id, String subject, String issuer, Long ttMills) {
+    public static String createJwt(String id, String subject, String issuer, Long ttMills, Map<String, Object> claims, String jwtKey) {
         //指定算法
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         //当前系统时间
@@ -56,23 +47,27 @@ public class JwtUtils {
         }
         //过期时间
         long expMills = nowMills + ttMills;
-        Date expDate = new Date(expMills);
+        Date expDate  = new Date(expMills);
         //生成密钥
-        SecretKey secretKey = generaKey();
+        SecretKey secretKey = generaKey(jwtKey);
         //封装JWT的信息
         JwtBuilder builder = Jwts.builder()
-            //唯一的ID
-            .setId(id)
-            //主题
-            .setSubject(subject)
-            //签发者
-            .setIssuer(issuer)
-            //签发时间
-            .setIssuedAt(now)
-            //签名
-            .signWith(signatureAlgorithm, secretKey)
-            //设置过期时间
-            .setExpiration(expDate);
+                //唯一的ID
+                .setId(id)
+                //主题
+                .setSubject(subject)
+                //签发者
+                .setIssuer(issuer)
+                //签发时间
+                .setIssuedAt(now)
+                //签名
+                .signWith(signatureAlgorithm, secretKey)
+                //设置过期时间
+                .setExpiration(expDate);
+        // 放入claim值
+        for (Map.Entry<String, Object> entry : claims.entrySet()) {
+            builder.claim(entry.getKey(), entry.getValue());
+        }
         return builder.compact();
     }
 
@@ -81,24 +76,20 @@ public class JwtUtils {
      *
      * @return 密钥
      */
-    private SecretKey generaKey() {
-        byte[] encodeKey = Base64.getEncoder().encode(JWT_KEY.getBytes());
+    private static SecretKey generaKey(String jwtKey) {
+        byte[] encodeKey = Base64.getEncoder().encode(jwtKey.getBytes());
         return new SecretKeySpec(encodeKey, 0, encodeKey.length, "AES");
     }
 
     /**
      * 解析令牌
      *
-     * @param jwt    JWT的内容
-     * @param jwtKey 生成JWT时的使用的Key值
+     * @param jwt JWT的内容
      * @return 原数据
      */
-    public Claims parseJwt(String jwt, String jwtKey) {
-        SecretKey secretKey = generaKey();
-        return Jwts.parser()
-            .setSigningKey(secretKey)
-            .parseClaimsJws(jwt)
-            .getBody();
+    public static Claims parseJwt(String jwt, String jwtKey) {
+        SecretKey secretKey = generaKey(jwtKey);
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
     }
 
 }
