@@ -1,4 +1,4 @@
-package pers.zhangbin.tool.common.util;
+package pers.zhangbin.tool.common.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -18,7 +18,7 @@ import java.util.Date;
  * @create 2022/2/10 14:12
  * @since JDK1.8
  */
-public class JwtUtil {
+public class JwtUtils {
 
     /**
      * JWT默认有效期1h
@@ -29,7 +29,7 @@ public class JwtUtil {
      */
     private final String JWT_KEY;
 
-    public JwtUtil(String jwtKey) {
+    public JwtUtils(String jwtKey) {
         JWT_KEY = jwtKey;
     }
 

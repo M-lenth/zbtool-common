@@ -1,4 +1,4 @@
-package pers.zhangbin.tool.common.util;
+package pers.zhangbin.tool.common.utils;
 
 /**
  * ClassName: TypeUtil <br>
@@ -8,7 +8,7 @@ package pers.zhangbin.tool.common.util;
  * @create 2022/3/11 11:26
  * @since JDK1.8
  */
-public class TypeUtil {
+public class TypeUtils {
 
     public static String getTypeString(Class<?> clazz) {
         if (null == clazz) {

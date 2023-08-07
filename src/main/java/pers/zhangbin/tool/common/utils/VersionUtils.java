@@ -1,4 +1,4 @@
-package pers.zhangbin.tool.common.util;
+package pers.zhangbin.tool.common.utils;
 
 /**
  * ClassName: VersionUtil <br>

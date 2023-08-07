@@ -1,4 +1,4 @@
-package pers.zhangbin.tool.common.util;
+package pers.zhangbin.tool.common.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import static pers.zhangbin.tool.common.constant.DateConstant.*;
  * @create 2021/12/17 11:13
  * @since JDK1.8
  */
-public class DateUtil {
+public class DateUtils {
 
     /**
      * 根据格式化的日期字符串获取日期对象
