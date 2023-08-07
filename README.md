@@ -2,12 +2,9 @@
 
 #### 介绍
 
-zbtool-common，用于Java开发使用的一个工具类内容。其中包含以下模块
+zbtool-common，用于Java开发使用的一个工具包。
 
-1. common
-2. net
-
-工具类使用文档：
+工具包使用文档：
 
 #### 安装教程
 
@@ -32,9 +29,17 @@ zbtool-common，用于Java开发使用的一个工具类内容。其中包含以
 
   本工具包使用的常量类型
 
-- util
+- filestorage
 
-  常用工具类
+  主要针对于FastDFS的文件存储工具，可删
+
+- security
+
+  字符串加密的包
+
+- utils
+
+  常用工具类，有以下几类
 
   - DateUtils：对日期操作的工具类
 
