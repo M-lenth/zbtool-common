@@ -1,4 +1,4 @@
-package pers.zhangbin.tool.common.util;
+package pers.zhangbin.tool.common.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

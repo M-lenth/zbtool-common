@@ -1,4 +1,4 @@
-package pers.zhangbin.tool.common.util;
+package pers.zhangbin.tool.common.utils;
 
 import pers.zhangbin.tool.common.constant.BracketType;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
-import static pers.zhangbin.tool.common.util.CharUtils.*;
+import static pers.zhangbin.tool.common.utils.CharUtils.*;
 
 /**
  * Classname: StringUtils <br>

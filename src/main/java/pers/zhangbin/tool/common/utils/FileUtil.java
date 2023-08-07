@@ -1,4 +1,4 @@
-package pers.zhangbin.tool.common.util;
+package pers.zhangbin.tool.common.utils;
 
 import pers.zhangbin.tool.common.filestorage.FastDfsFile;
 import pers.zhangbin.tool.common.filestorage.SplitFile;
