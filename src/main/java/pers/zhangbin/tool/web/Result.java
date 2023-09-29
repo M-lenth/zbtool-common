@@ -20,7 +20,7 @@ public class Result<T> {
     /**
      * 返回的消息
      */
-    private String message;
+    private String  message;
     /**
      * 返回码
      */
@@ -28,7 +28,7 @@ public class Result<T> {
     /**
      * 返回的数据
      */
-    private T data;
+    private T       data;
     /**
      * 返回状态是否成功
      */
@@ -128,8 +128,8 @@ public class Result<T> {
     /**
      * 成功返回值
      *
-     * @param code    返回代码
-     * @param message 返回消息
+     * @param code    成功代码
+     * @param message 成功消息
      * @param <T>     返回类型
      * @return {@link Result}
      */
@@ -140,14 +140,25 @@ public class Result<T> {
     /**
      * 成功返回值
      *
-     * @param code    返回代码
-     * @param message 返回消息
+     * @param code    成功代码
+     * @param message 成功消息
      * @param data    保存的数据
      * @param <T>     返回类型
      * @return {@link Result}
      */
     public static <T> Result<T> ok(Integer code, String message, T data) {
         return new Result<>(code, message, data, true);
+    }
+
+    /**
+     * 操作成功将消息返回到客户端
+     *
+     * @param message 成功消息
+     * @param <T>     数据类型泛型
+     * @return 返回信息{@link Result}
+     */
+    public static <T> Result<T> okMessage(String message) {
+        return ok(SUCCESS, message);
     }
 
     /**
