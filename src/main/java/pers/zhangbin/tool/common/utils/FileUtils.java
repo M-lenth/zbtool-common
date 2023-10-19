@@ -34,10 +34,10 @@ public class FileUtils {
     public static byte[] getByteArray(File file) {
         byte[] buffer = null;
         try {
-            FileInputStream fis = new FileInputStream(file);
+            FileInputStream       fis = new FileInputStream(file);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            byte[] b = new byte[1024];
-            int n;
+            byte[]                b   = new byte[1024];
+            int                   n;
             while ((n = fis.read(b)) != -1) {
                 bos.write(b, 0, n);
             }
@@ -60,7 +60,7 @@ public class FileUtils {
      */
     private static String getExt(File file) {
         String filename = file.getName();
-        int index = filename.lastIndexOf(".");
+        int    index    = filename.lastIndexOf(".");
 
         if (index == -1) {
             return null;
@@ -76,8 +76,8 @@ public class FileUtils {
      * @see File
      */
     private static String getNameWithoutExt(File file) {
-        String name = file.getName();
-        int index = name.lastIndexOf(".");
+        String name  = file.getName();
+        int    index = name.lastIndexOf(".");
         if (index == -1) {
             return null;
         }
@@ -167,7 +167,7 @@ public class FileUtils {
      * @param content 追加的数据
      */
     public static void append(File file, String content) throws IOException {
-        String old = read(file);
+        String     old    = read(file);
         FileWriter writer = new FileWriter(file);
         writer.append(old).append(content);
         writer.flush();
@@ -182,8 +182,8 @@ public class FileUtils {
      */
     public static String read(File file) throws IOException {
         StringBuilder builder = new StringBuilder();
-        FileReader reader = new FileReader(file);
-        int ch;
+        FileReader    reader  = new FileReader(file);
+        int           ch;
         while ((ch = reader.read()) != -1) {
             builder.append((char) ch);
         }
@@ -211,18 +211,21 @@ public class FileUtils {
      * @return 分离的文件信息
      */
     public static SplitFile split(String source, String targetDirectory) throws IOException {
-        SplitFile splitFile = new SplitFile();
-        File file = new File(source);
-        FileInputStream fis = new FileInputStream(file);
-        byte[] memory = new byte[MB];
-        int index = 0;
-        int len, sum = 0;
-        long length = file.length();
-        File newDirectory = createNewDirectory(targetDirectory);
-        boolean flag = false;
+        SplitFile       splitFile    = new SplitFile();
+        File            file         = new File(source);
+        FileInputStream fis          = new FileInputStream(file);
+        int             index        = 0;
+        int             len, sum     = 0;
+        long            length       = file.length();
+        File            newDirectory = createNewDirectory(targetDirectory);
+        if (null == newDirectory) {
+            throw new RuntimeException("文件目录路径为空，请检查路径！");
+        }
+        boolean flag   = false;
+        byte[]  memory = length > 1024 ? new byte[MB] : new byte[(int) length];
         while ((len = fis.read(memory)) != -1) {
-            String files = newDirectory.getPath() + File.separator + StringUtils.getFilename(file.getName()) + "_" + ++index;
-            File newFile = createNewFile(files);
+            String files   = newDirectory.getPath() + File.separator + StringUtils.getFilename(file.getName()) + "_" + ++index;
+            File   newFile = createNewFile(files);
             byte[] tp;
             if (flag) {
                 int tmp = (int) (length - sum);
@@ -230,6 +233,9 @@ public class FileUtils {
                 System.arraycopy(memory, 0, tp, 0, tp.length);
             } else {
                 tp = memory;
+            }
+            if (null == newFile) {
+                throw new RuntimeException("文件路径为空，请检查路径！");
             }
             try (OutputStream fos = new FileOutputStream(newFile)) {
                 fos.write(tp);
@@ -246,6 +252,18 @@ public class FileUtils {
         splitFile.setFilename(StringUtils.getFilename(file.getName()));
         splitFile.setPath(file.getPath());
         return splitFile;
+    }
+
+    /**
+     * 分割文件
+     *
+     * @param src 原文件路径
+     * @return 分割后的文件信息
+     */
+    public static SplitFile split(String src) throws IOException {
+        File   file   = new File(src);
+        String target = file.getParent() + File.separator + StringUtils.getFilename(file.getName()) + "_list";
+        return split(src, target);
     }
 
 
@@ -296,7 +314,7 @@ public class FileUtils {
      * @return 是否复制成功
      */
     public static boolean copy(String src, String target) throws IOException {
-        File srcFile = new File(src);
+        File srcFile    = new File(src);
         File targetFile = new File(target);
         if (!srcFile.exists()) {
             return false;
@@ -328,7 +346,7 @@ public class FileUtils {
      * @return 是否移动成功
      */
     public static boolean move(String src, String target) {
-        File srcFile = new File(src);
+        File srcFile    = new File(src);
         File targetFile = new File(target);
         if (!srcFile.exists()) {
             return false;
